@@ -372,22 +372,110 @@ flowchart TB
 
 ## 10. Criterios de Aceptación del PRD
 
-El PRD se considera aprobado cuando:
+El PRD se considera aprobado cuando se cumplan todos los siguientes criterios:
 
-- [ ] El resumen ejecutivo está validado por el Aprobador de Negocio.
-- [ ] Las métricas de éxito tienen valor inicial y meta medibles.
-- [ ] El alcance está firmado por Producto y Arquitectura.
-- [ ] Las reglas de negocio explícitas no tienen contradicciones.
-- [ ] Los riesgos tienen mitigación documentada.
-- [ ] Los diagramas conceptuales reflejan correctamente el flujo MVP.
+### 10.1 Contenido del PRD
+
+| ID | Criterio | Responsable | Estado |
+| :-- | :------- | :---------- | :----- |
+| CA-01 | Resumen ejecutivo validado por el Aprobador de Negocio | John (PM) | ☐ |
+| CA-02 | Métricas de éxito con valor inicial y meta medibles | John (PM) | ☐ |
+| CA-03 | Alcance (5.1 y 5.2) firmado por Producto y Arquitectura | John (PM) + Arquitecto | ☐ |
+| CA-04 | Reglas de negocio (RN-01 a RN-40) sin contradicciones y priorizadas | John (PM) | ☐ |
+| CA-05 | Restricciones y supuestos revisados y aprobados | John (PM) + Arquitecto | ☐ |
+| CA-06 | Actores y casos de uso validados con stakeholders clave | John (PM) | ☐ |
+| CA-07 | Diagramas conceptuales (5.3, A.1 a A.3) revisados y consistentes | Arquitecto | ☐ |
+| CA-08 | Funcionalidades (F-01 a F-23) con criterios de aceptación individuales | John (PM) | ☐ |
+| CA-09 | Reglas de negocio priorizadas (Must/Should/Could) | John (PM) | ☐ |
+| CA-10 | Glosario completo y consistente con el dominio | John (PM) | ☐ |
+
+### 10.2 Producto
+
+| ID | Criterio | Responsable | Estado |
+| :-- | :------- | :---------- | :----- |
+| CA-11 | Prototipos/wireframes (A.4) aprobados por UX | UX Designer | ☐ |
+| CA-12 | ADR-0001 (stack tecnológico) aprobado | Arquitecto | ☐ |
+| CA-13 | Contratos de integración con SAP definidos | Arquitecto | ☐ |
+| CA-14 | Contratos de integración con DPWORLD/APM definidos | Arquitecto | ☐ |
+| CA-15 | Plan de datos maestros (mapeo, calidad, limpieza) aprobado | John (PM) + Arquitecto | ☐ |
+
+### 10.3 Proyecto
+
+| ID | Criterio | Responsable | Estado |
+| :-- | :------- | :---------- | :----- |
+| CA-16 | Cronograma del MVP con hitos y fecha de entrega definidos | PM del proyecto | ☐ |
+| CA-17 | Recursos de desarrollo asignados y disponibles | PM del proyecto | ☐ |
+| CA-18 | Plan de testing (unitario, integración, aceptación) definido | QA Lead | ☐ |
+| CA-19 | Plan de despliegue y capacitación definido | PM del proyecto | ☐ |
 
 ## 11. Trazabilidad
 
-- Las **Historias Funcionales** posteriores referencian este PRD como `PRD-TMS-001`.
-- El **Reporte Resumen de Pruebas** citará los criterios de aceptación funcionales definidos aquí.
-- Las **Notas de Lanzamiento** resumirán el valor entregado contra los objetivos declarados.
-- Los **ADRs** referenciados en este PRD se enlazan desde la sección de Restricciones y Supuestos.
-- Los **contratos de integración** con otros dominios de la Suite Operativa (vía XMS) se definirán en fase de arquitectura.
+### 11.1 Referencias del PRD
+
+| Artefacto | Referencia | Sección del PRD |
+| :-------- | :--------- | :-------------- |
+| Épicas | Cada epic referencia secciones del PRD | Historial de Cambios |
+| Historias Funcionales | Cada historia referencia epic + funcionalidad | Historial de Cambios |
+| ADR-0001 | Stack tecnológico definido | R-03 (Restricciones) |
+| Contrato SAP | Integración batch vía BAPI | R-02 (Restricciones) |
+| Contrato DPWORLD/APM | Coordinación de citas vía portal | R-06 (Restricciones) |
+| Contrato XMS | Integración con Suite Operativa | R-05 (Restricciones) |
+| Plan de Testing | Reglas de negocio a probar | RN-01 a RN-40 |
+| Plan de Despliegue | Funcionalidades MVP a desplegar | 5.1 (Alcance) |
+| Notas de Lanzamiento | Valor entregado contra objetivos | 4 (Objetivos y Métricas) |
+| Reporte Resumen de Pruebas | Criterios de aceptación del PRD | 10 (Criterios de Aceptación) |
+
+### 11.2 Matriz de Trazabilidad
+
+```mermaid
+flowchart LR
+    subgraph ENTRADA[Artefactos de Entrada]
+        PRD[PRD-TMS-001]
+    end
+
+    subgraph SALIDA[Artefactos de Salida]
+        EP[Épicas]
+        HF[Historias Funcionales]
+        ADR[ADRs]
+        CT[Contratos]
+        PT[Plan de Testing]
+        PD[Plan de Despliegue]
+        NL[Notas de Lanzamiento]
+        RP[Reporte de Pruebas]
+    end
+
+    PRD -->|Define| EP
+    EP -->|Descompone en| HF
+    PRD -->|Restricciones| ADR
+    PRD -->|Integración| CT
+    PRD -->|Reglas de negocio| PT
+    PRD -->|Funcionalidades| PD
+    PRD -->|Objetivos| NL
+    PRD -->|Criterios| RP
+
+    style PRD fill:#1a237e,color:#fff
+    style EP fill:#e3f2fd
+    style HF fill:#e3f2fd
+    style ADR fill:#fff3e0
+    style CT fill:#fff3e0
+    style PT fill:#e8f5e9
+    style PD fill:#e8f5e9
+    style NL fill:#fce4ec
+    style RP fill:#fce4ec
+```
+
+### 11.3 Convención de Referencia
+
+| Artefacto Destino | Convención de Referencia |
+| :---------------- | :---------------------- |
+| Épicas | `EP-TMS-{número}` |
+| Historias Funcionales | `HF-TMS-{épica}-{número}` |
+| ADR | `ADR-{número}` |
+| Contratos | `CT-{dominio}-{número}` |
+| Plan de Testing | `PT-TMS-{fase}` |
+| Plan de Despliegue | `PD-TMS-{fase}` |
+| Notas de Lanzamiento | `NL-TMS-{versión}` |
+| Reporte de Pruebas | `RP-TMS-{fase}` |
 
 ## 12. Glosario
 
