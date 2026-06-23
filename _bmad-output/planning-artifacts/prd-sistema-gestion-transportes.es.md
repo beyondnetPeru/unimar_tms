@@ -159,41 +159,99 @@ El TMS es pieza clave de la digitalización de la Suite Operativa de Unimar. Ade
 ### 5.3 Mapa Conceptual
 
 ```mermaid
-flowchart LR
-    subgraph SUITE[Suite Operativa UNIMAR]
+flowchart TB
+    subgraph ACTORES[Actores del Sistema]
+        GT[Gestor de Transportes<br/>Planifica y asigna viajes]
+        TC[Transportista<br/>Ejecuta viajes asignados]
+        OD[Operador de Documentación<br/>Recibe y valida datos desde SAP]
+        GC[Gestor Comercial<br/>Consulta estado de operaciones]
+    end
+
+    subgraph TMS[TMS - Sistema de Gestión de Transportes]
         direction TB
-        XMS[XMS - Bróker de Integración]
-        UMS[UMS]
-        MMS[MMS]
-        SIL[SIL]
-        TMS[TMS - Nuevo]
+        WA[Web App TMS<br/>Interfaz de usuario]
+        BE[Backend API<br/>NestJS]
+        DB[(PostgreSQL<br/>Datos operacionales)]
+        MQ[RabbitMQ<br/>Cola de mensajes]
+        
+        subgraph MODULOS[Módulos MVP — Fase 1]
+            M1[Relaciones Detalladas]
+            M2[Solicitudes de Transporte]
+            M3[Planificación y Asignación]
+            M4[Citas Portuarias]
+            M5[Dashboard y Alertas]
+            M6[Auditoría]
+        end
     end
 
     subgraph EXT[Sistemas Externos]
-        SAP[SAP]
-        SUNAT
-        DPW[DPWORLD / APM]
-        TT[Track & Trace]
+        SAP[SAP Legacy<br/>Maestros y Relaciones]
+        XMS[XMS - Bróker de Integración]
+        DPW[DPWORLD / APM<br/>Terminales Portuarias]
+        SUNAT[SUNAT<br/>Guías Electrónicas]
+        TT[Track & Trace<br/>Seguimiento]
     end
 
-    TMS --- XMS
-    UMS --- XMS
-    MMS --- XMS
-    SIL --- XMS
-    TMS -->|BAPI| SAP
-    TMS -->|WS| SUNAT
-    TMS -->|Portal| DPW
-    TMS -->|API| TT
+    GT -->|Planifica viajes| WA
+    TC -.-|Consulta solicitud| WA
+    OD -.-|Valida datos| WA
+    GC -.-|Consulta dashboard| WA
+
+    WA --> BE
+    BE --> DB
+    BE --> MQ
+
+    BE -->|BAPI Batch diario| SAP
+    BE -->|API| XMS
+    BE -->|Portal Web| DPW
+    BE -.->|WS — Fase 2| SUNAT
+    BE -.->|API — Fase 3| TT
+
+    style MODULOS fill:#e8f5e9,stroke:#4caf50
+    style EXT fill:#fff3e0,stroke:#ff9800
+    style ACTORES fill:#e3f2fd,stroke:#2196f3
 ```
+
+**Leyenda de conexiones:**
+| Conexión | Protocolo | Fase | Dirección |
+| :------- | :-------- | :--- | :-------- |
+| TMS → SAP | BAPI Batch | MVP | TMS consulta maestros y relaciones |
+| TMS → XMS | API REST | MVP | TMS se integra con Suite Operativa |
+| TMS → DPWORLD/APM | Portal Web | MVP | Coordinación de citas portuarias |
+| TMS → SUNAT | Web Service | Fase 2 | Emisión de GRE |
+| TMS → Track & Trace | API REST | Fase 3 | Consulta de tracking |
 
 ## 6. Actores y Casos de Uso de Alto Nivel
 
-| Actor | Necesidad | Caso de uso de alto nivel | Prioridad |
-| :---- | :-------- | :------------------------ | :-------- |
-| **Gestor de Transportes** | Planificar y asignar viajes de descarga | Gestionar relaciones detalladas, crear solicitudes, asignar viajes | Must |
-| **Transportista** | Ejecutar viaje asignado | Consultar solicitud asignada, confirmar datos | Must |
-| **Operador de Documentación** | Gestionar relaciones detalladas | Registrar y mantener relaciones detalladas por nave/BL | Could |
-| **Gestor Comercial** | Consultar estado de operaciones | Visualizar dashboard y tracking | Should |
+### 6.1 Descripción de Actores
+
+| Actor | Rol en el Sistema | Responsabilidades Principales |
+| :---- | :---------------- | :---------------------------- |
+| **Gestor de Transportes** | Planifica, asigna y monitorea viajes | Crear solicitudes, asignar transportistas, coordinar citas, gestionar excepciones, dashboard |
+| **Transportista** | Ejecuta viajes asignados | Consultar solicitudes, confirmar chofer y unidad, aceptar/rechazar viaje (Fase 2) |
+| **Operador de Documentación** | Recibe y valida datos desde SAP | Verificar relaciones detalladas, mantener datos de nave/BL |
+| **Gestor Comercial** | Consulta estado de operaciones | Visualizar dashboard, consultar tracking, generar reportes |
+| **Operador de Transmisiones** | Emite guías de remisión | Transmitir GRE a SUNAT (Fase 2) |
+
+### 6.2 Casos de Uso por Actor
+
+| Actor | Casos de Uso — MVP (Fase 1) | Casos de Uso — Fase 2+ |
+| :---- | :-------------------------- | :---------------------- |
+| **Gestor de Transportes** | F-01 Consultar relaciones detalladas, F-02 Crear solicitud, F-03 Asignar viaje, F-04 Seleccionar transportista, F-05 Seleccionar chofer, F-06 Seleccionar unidad, F-07 Confirmar viaje, F-08 Consultar viajes, F-09 Editar viaje, F-10 Dashboard, F-11 Coordinar citas portuarias, F-12 Cancelar solicitud/viaje, F-14 Historial de cambios, F-17 Buscar contenedores, F-18 Clonar solicitud, F-19 Calendario de citas, F-20 Alertas de vencimiento, F-21 Exportar datos | F-13 Reasignar viaje, F-15 Notificaciones mejoradas, F-22 Gestión de excepciones |
+| **Transportista** | Consultar solicitud asignada, ver datos de viaje | F-16 Aceptación/rechazo de viaje, F-23 Registro fotográfico |
+| **Operador de Documentación** | Consultar relaciones detalladas, validar datos | Edición de relaciones |
+| **Gestor Comercial** | Dashboard de planificación, consulta de viajes | Reportería avanzada, portal de clientes |
+| **Operador de Transmisiones** | — | Emisión de GRE a SUNAT |
+
+### 6.3 Matriz de Interacción
+
+| Actor | Web App TMS | SAP | DPWORLD/APM | Track & Trace |
+| :---- | :---------- | :-- | :---------- | :------------ |
+| **Gestor de Transportes** | Crea, edita, consulta | Consulta relaciones | Coordina citas | Consulta tracking |
+| **Transportista** | Consulta solicitud | — | — | — |
+| **Operador de Documentación** | Valida datos | Recibe datos | — | — |
+| **Gestor Comercial** | Consulta dashboard | — | — | Consulta tracking |
+| **Operador de Transmisiones** | — | Consulta entregas | — | — |
 
 ## 7. Funcionalidades Detalladas del MVP
 
