@@ -40,7 +40,7 @@ ls .claude/skills/
 <details>
 <summary><strong>Por rol — guía de entrada</strong></summary>
 
-- **Product Manager / PO:** comenzar por [PRD](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md), luego [Diagramas conceptuales](./docs/tms-figma.drawio) y [Propuesta README satélite](./_bmad-output/planning-artifacts/propuesta-readme-estandar-satelite.es.md).
+- **Product Manager / PO:** comenzar por [PRD](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md) y [Diagramas del sistema](./docs/diagramas-tms.md).
 - **Arquitectos:** comenzar por [DECISIONS.md](./DECISIONS.md), [ADRs locales](./reference/architecture/adrs/) y [Stack Tecnológico](./reference/architecture/stack/stack-tecnologico-autorizado-tms.es.md).
 - **Desarrolladores:** revisar [Estrategia de Ramificación](./reference/governance/sdlc/estrategia-ramificacion.es.md) y [CONTRIBUTING.md](./CONTRIBUTING.md). Código pendiente — fase de construcción no iniciada.
 - **Agentes IA (BMAD):** revisar [AGENTS.md](./AGENTS.md) y skills en `.claude/skills/`.
@@ -60,9 +60,10 @@ Abre la fase del ciclo de vida en la que trabajas. Cada sección agrupa los docu
 | Documento | Descripción | Tipo |
 |---|---|---|
 | [PRD — Sistema de Gestión de Transportes](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md) | Visión, alcance MVP, actores, flujos, historias de usuario, reglas de negocio, NFRs | PRD |
-| [Diagramas Conceptuales (Drawio)](./docs/tms-figma.drawio) | Vistas conceptuales, C4 de contexto, flujos de proceso, prototipos (8 páginas) | Modelo |
+| [Diagramas del Sistema (Mermaid)](./docs/diagramas-tms.md) | Vistas conceptuales, C4 de contexto, flujos de proceso, prototipos (renderizable en GitHub) | Modelo |
+| [Diagramas fuente (Drawio)](./docs/tms-figma.drawio) | Archivo editable en draw.io (8 páginas) | Fuente |
 | [Flujo de Planificación (PDF)](./docs/tms-planificacionservicio.pdf) | Prototipos de negocio del flujo de planificación de transportes | Prototipo |
-| [Propuesta README Estándar Satélite](./_bmad-output/planning-artifacts/propuesta-readme-estandar-satelite.es.md) | Análisis para incorporar README estandarizado en unimar_arch (S-16) | Propuesta |
+| [Propuesta README Estándar Satélite (en unimar_arch)](https://github.com/mhernandez-unimar/unimar_arch/blob/main/docs/planning-artifacts/propuesta-readme-estandar-satelite.es.md) | Análisis para incorporar README estandarizado en unimar_arch (S-16) | Propuesta |
 
 </details>
 
