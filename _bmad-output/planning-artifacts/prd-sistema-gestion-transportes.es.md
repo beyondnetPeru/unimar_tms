@@ -270,18 +270,47 @@ flowchart LR
 
 ## 8. Restricciones y Supuestos
 
-- **Restricciones regulatorias:** Las guías de remisión electrónicas deben cumplir con la normativa SUNAT (fuera de MVP, considerar en fase 2)
-- **Restricciones técnicas:** Integración con SAP vía BAPI existente; datos maestros provistos por SAP GTS; stack definido en ADR-0001 (NestJS, PostgreSQL, React)
-- **Supuestos:** Los maestros de transportistas, choferes y unidades están disponibles en SAP; el MVP no requiere integración en tiempo real con SAP (carga batch); los prototipos de negocio reflejan fielmente el flujo actual
+### 8.1 Restricciones
+
+| ID | Restricción | Categoría |
+| :-- | :---------- | :-------- |
+| R-01 | Las guías de remisión electrónicas deben cumplir con la normativa SUNAT (fuera de MVP, considerar en fase 2) | Regulatoria |
+| R-02 | Integración con SAP vía BAPI existente; datos maestros provistos por SAP GTS | Técnica |
+| R-03 | Stack tecnológico definido en ADR-0001 (NestJS, PostgreSQL, React) | Técnica |
+| R-04 | El MVP está limitado a planificación de transportes; la operación (reasignación, aceptación, excepciones, registro fotográfico) es Fase 2 | Alcance |
+| R-05 | El TMS depende de XMS como bróker de integración para interoperar con otros dominios de la Suite Operativa | Técnica |
+| R-06 | El portal de DPWORLD/APM es un sistema externo sin control sobre disponibilidad ni cambios de interfaz | Operativa |
+| R-07 | Los datos maestros (transportistas, choferes, unidades) dependen de SAP GTS; si SAP no provee datos, el TMS no puede funcionar | Dependencia |
+
+### 8.2 Supuestos
+
+| ID | Supuesto | Riesgo si no se cumple |
+| :-- | :------- | :--------------------- |
+| S-01 | Los maestros de transportistas, choferes y unidades están disponibles en SAP y son precisos | No se pueden crear viajes válidos |
+| S-02 | El MVP no requiere integración en tiempo real con SAP (carga batch diaria es suficiente) | Retraso en datos actualizados |
+| S-03 | Los prototipos de negocio reflejan fielmente el flujo actual | El sistema no se ajusta a la operación real |
+| S-04 | Los transportistas tienen capacidad vehicular suficiente para cubrir la demanda | La planificación no se puede ejecutar |
+| S-05 | Los Gestores de Transportes serán capacitados y adoptarán el sistema | El sistema no genera valor; se mantiene el proceso manual |
+| S-06 | Las relaciones detalladas llegan completas desde SAP (nave, BL, contenedores, puertos, fechas) | Datos faltantes requieren carga manual |
+| S-07 | Los transportistas responden las asignaciones en un tiempo razonable (< 24 horas) | Retrasos en la planificación |
+| S-08 | La infraestructura de TI (servidores, red, seguridad) estará disponible para el MVP | Retraso en el cronograma |
 
 ## 9. Riesgos de Negocio
 
-| Riesgo | Probabilidad | Impacto | Mitigación |
-| :----- | :----------- | :------ | :--------- |
-| Calidad de datos maestros en SAP | Media | Alto | Validar data quality antes del desarrollo; plan de limpieza |
-| Cambios en normativa SUNAT de GRE | Baja | Medio | Diseñar GRE con parámetros configurables; monitorear cambios regulatorios |
-| Adopción por parte de transportistas | Media | Medio | Involucrar transportistas en validación temprana; UI simple e intuitiva |
-| Dependencia de integración SAP no disponible | Alta | Alto | Definir interfaz batch como MVP; planificar BAPI en fase 2 |
+| ID | Riesgo | Probabilidad | Impacto | Mitigación |
+| :-- | :----- | :----------- | :------ | :--------- |
+| RS-01 | Calidad de datos maestros en SAP incompleta o desactualizada | Media | Alto | Validar data quality antes del desarrollo; plan de limpieza; alertas de datos faltantes |
+| RS-02 | Cambios en normativa SUNAT de GRE durante el proyecto | Baja | Medio | Diseñar GRE con parámetros configurables; monitorear cambios regulatorios |
+| RS-03 | Adopción deficiente por parte de transportistas | Media | Medio | Involucrar transportistas en validación temprana; UI simple e intuitiva |
+| RS-04 | Dependencia de integración SAP batch no disponible a tiempo | Alta | Alto | Definir interfaz batch como MVP; planificar BAPI en fase 2; datos de respaldo |
+| RS-05 | Disponibilidad del portal DPWORLD/APM afecta coordinación de citas | Media | Alto | Diseñar interfaz de respaldo; documentar proceso manual de coordinación |
+| RS-06 | Resistencia al cambio por parte de Gestores de Transportes | Media | Alto | Involucrarlos desde diseño; mostrar beneficios tangibles; capacitación intensiva |
+| RS-07 | Recursos de desarrollo insuficientes para el cronograma del MVP | Media | Alto | Definir MVP acotado; priorizar funcionalidades core; seguimiento semanal |
+| RS-08 | Datos incompletos o erróneos desde SAP en relaciones detalladas | Media | Medio | Validación de calidad al importar; alertas de datos faltantes; proceso de corrección |
+| RS-09 | Coordinación lenta con transportistas (tiempo de respuesta > 24h) | Alta | Medio | Establecer SLAs de respuesta; alertas de falta de respuesta; escalamiento |
+| RS-10 | Cambios en requerimientos durante el desarrollo | Alta | Medio | Control de cambios formal; aprobación de adds; registro en DECISIONS.md |
+| RS-11 | Infraestructura de TI no disponible a tiempo para el MVP | Baja | Alto | Definir requisitos tempranos; seguimiento con TI; alternativas cloud |
+| RS-12 | Fuga o acceso no autorizado a datos sensibles de transportistas | Baja | Alto | Acceso por roles; auditoría de accesos; cifrado de datos sensibles |
 
 ## 10. Criterios de Aceptación del PRD
 
