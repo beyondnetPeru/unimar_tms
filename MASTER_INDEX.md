@@ -22,7 +22,6 @@
 | [reference/knowledge/dominio/](./reference/knowledge/dominio/) | Conocimiento de dominio TMS |
 | [docs/](./docs/) | Diagramas, prototipos y documentación de dominio |
 | [docs/diagramas-tms.md](./docs/diagramas-tms.md) | Diagramas del sistema TMS (Mermaid, renderizable en GitHub) |
-| [docs/tms-figma.drawio](./docs/tms-figma.drawio) | Diagramas fuente (draw.io, 8 páginas) |
 | [\_bmad-output/](./_bmad-output/) | Artefactos generados (PRD, épicas, sprints) |
 | [\_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md) | PRD — Documento de Requisitos de Producto |
 

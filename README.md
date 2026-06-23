@@ -61,8 +61,6 @@ Abre la fase del ciclo de vida en la que trabajas. Cada sección agrupa los docu
 |---|---|---|
 | [PRD — Sistema de Gestión de Transportes](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md) | Visión, alcance MVP, actores, flujos, historias de usuario, reglas de negocio, NFRs | PRD |
 | [Diagramas del Sistema (Mermaid)](./docs/diagramas-tms.md) | Vistas conceptuales, C4 de contexto, flujos de proceso, prototipos (renderizable en GitHub) | Modelo |
-| [Diagramas fuente (Drawio)](./docs/tms-figma.drawio) | Archivo editable en draw.io (8 páginas) | Fuente |
-| [Flujo de Planificación (PDF)](./docs/tms-planificacionservicio.pdf) | Prototipos de negocio del flujo de planificación de transportes | Prototipo |
 | [Propuesta README Estándar Satélite (en unimar_arch)](https://github.com/mhernandez-unimar/unimar_arch/blob/main/docs/planning-artifacts/propuesta-readme-estandar-satelite.es.md) | Análisis para incorporar README estandarizado en unimar_arch (S-16) | Propuesta |
 
 </details>

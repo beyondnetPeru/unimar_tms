@@ -23,9 +23,14 @@
    - 3.3 Pantallas y Flujos de Interacción
    - 3.4 Reglas de Negocio Visibles
    - 3.5 Criterios de Aceptación
-   - 3.6 Dependencias Clave
+    - 3.6 Dependencias Clave
 4. [Requisitos No Funcionales](#4-requisitos-no-funcionales)
 5. [Glosario](#5-glosario)
+6. [Anexos — Diagramas del Sistema](#6-anexos--diagramas-del-sistema)
+   - 6.1 Vista Conceptual General
+   - 6.2 Vista Conceptual de Proceso
+   - 6.3 C4 Context View
+   - 6.4 Prototipos de Pantallas (MVP)
 
 ---
 
@@ -302,6 +307,129 @@ Alineados al estándar de arquitectura Unimar:
 | **Checkpoint** | Punto de control en la ejecución del viaje (inicio ruta, fin ruta) |
 | **Manifiesto** | Documento de carga de la nave |
 | **BL / Booking** | Bill of Lading — conocimiento de embarque |
+
+---
+
+## 6. Anexos — Diagramas del Sistema
+
+### 6.1 Vista Conceptual General
+
+```mermaid
+flowchart LR
+    subgraph SAP[SAP GTS - Back Office]
+        OS[Orden de Servicio]
+        MD[Master Data<br/>Transportistas, Choferes, Placas,<br/>Guías, Manifiestos, BL, Contenedores]
+    end
+
+    subgraph TMS[TMS - Nuevo Sistema]
+        WA[Web App TMS<br/>Planificación y Gestión]
+        MA[Mobile App TMS<br/>Checkpoints y Consulta]
+    end
+
+    subgraph EX[Sistemas Externos]
+        TT[Track & Trace App]
+        TX[Transmisiones<br/>Emisión de Guías]
+        SU[SUNAT]
+        DP[DPWORLD]
+        AP[APM]
+    end
+
+    SAP -->|Lista: Entrega de Salidas| TX
+    TX -->|GRE| SU
+    TX -->|Query: Entregas de Salida| SAP
+    SAP -->|Master Data| TMS
+    MA -->|Tracking| TT
+    WA -->|Tracking| TT
+    WA -->|Reportes| TT
+    WA -->|Confirma Arribo/Zarpe / Citas| DP
+    WA -->|Citas| AP
+    MA -->|GRE PDF| NP[Notificaciones]
+    TT -->|Query by Placa| WA
+```
+
+**Actores del sistema y sus interacciones:**
+- **Gestor de Transportes** — consulta Track & Trace, coordina citas con DPWORLD/APM, gestiona planificación vía Web App TMS
+- **Operador de Transmisiones** — emite guías de remisión electrónicas hasta obtener OCR desde SUNAT
+- **Transportista** — consulta solicitudes de servicio, confirma contenedor, genera guía, registra checkpoints (inicio/fin ruta) vía Mobile App TMS
+- **Gestor Comercial** — consulta tracking y reportes
+
+### 6.2 Vista Conceptual de Proceso
+
+```mermaid
+flowchart LR
+    subgraph IN[Entrada]
+        SAP[SAP GTS] -->|Relación Detallada por Nave + BL| RD[Relación Detallada<br/>ID+NRO, Nave, IP, Manifiesto,<br/>Puertos, Fechas, IMO, Estado]
+    end
+
+    subgraph PLAN[Planificación]
+        RD --> ST[Solicitud de Transportes]
+        ST --> VJ[Viaje<br/>Nro, Origen, Destino,<br/>Transportista, Chofer, Placa]
+    end
+
+    subgraph ASIG[Asignación]
+        TP[Transportistas] --> VJ
+        CH[Choferes] --> VJ
+        UV[Unidades Vehiculares] --> VJ
+        CA[Citas / Autorización] --> VJ
+    end
+
+    subgraph EJEC[Ejecución]
+        VJ --> GR[Guía de Remisión Electrónica]
+        VJ --> CP[CheckPoints<br/>Inicio Ruta → Fin Ruta]
+    end
+
+    subgraph SAL[Salida]
+        GR --> EM[Servicio Transaccional<br/>Emisión GRE]
+        EM --> TR[Transmisión a SUNAT]
+    end
+```
+
+**Reglas de negocio del flujo:**
+- Un manifiesto puede tener más de una relación detallada
+- Fase 1 (alcance actual): relación detallada de **descarga de contenedores** desde puerto hacia depósito temporal o cliente
+- Una relación detallada puede pertenecer a diferentes orígenes: depósito, almacenes, etc.
+- Una Orden de Servicio (SAP) puede tener múltiples pedidos de transporte en diferentes momentos
+- Para carga suelta se requieren fotos, packing list y dimensiones (fase posterior)
+
+### 6.3 C4 Context View
+
+```mermaid
+C4Context
+    title C4 Context - Sistema TMS
+
+    Person(at, "Analista de Transportes", "Planifica y asigna viajes")
+    Person(tc, "Transportista", "Ejecuta viajes y registra checkpoints")
+
+    System(tms, "TMS", "Sistema de Gestión de Transportes")
+
+    System_Ext(sap, "SAP GTS", "Back Office - Órdenes de Servicio")
+    System_Ext(sunat, "SUNAT Middleware", "Interfaces para GRE")
+    System_Ext(tnt, "Track and Trace", "Sistema de Tracking existente")
+    System_Ext(ns, "Notification Service", "Notificaciones a transportistas")
+    System_Ext(dpw, "DP World Web Portal", "Terminal Portuaria")
+
+    Rel(at, tms, "Gestiona viajes y transportistas")
+    Rel(tc, tms, "Ejecuta viajes y consulta solicitudes")
+    Rel(tms, sap, "Registra guías, actualiza placas", "BAPI")
+    Rel(tms, tnt, "Consulta tracking por placa", "API")
+    Rel(tms, sunat, "Transmite GRE", "WS")
+    Rel(tms, ns, "Notifica eventos del viaje", "API")
+    Rel(tms, dpw, "Coordina citas portuarias", "Portal Web")
+```
+
+### 6.4 Prototipos de Pantallas (MVP)
+
+Los prototipos de interfaz del flujo de planificación cubren las siguientes pantallas:
+
+| Pantalla | Descripción | Funcionalidades Asociadas |
+| :------- | :---------- | :------------------------ |
+| **Dashboard de Planificación** | Resumen visual de viajes por estado (Planificados, En Ejecución, Completados) con acceso rápido a creación | F-10 |
+| **Listado de Relaciones Detalladas** | Tabla con filtros por nave, puerto, fecha. Botón para crear solicitud de transporte | F-01 |
+| **Creación de Solicitud de Transporte** | Wizard: seleccionar contenedores → definir origen/destino → fecha tentativa → confirmar | F-02 |
+| **Asignación de Viaje** | Selectores encadenados: Transportista → Chofer → Unidad Vehicular. Campos de viaje: origen, destino, fecha | F-03, F-04, F-05, F-06, F-07 |
+| **Detalle de Viaje** | Cabecera, datos generales, transportista/chofer/unidad, contenedores asignados, historial de estados | F-08, F-09 |
+
+> Los prototipos visuales detallados se encuentran en el archivo fuente `docs/tms-figma.drawio` (8 páginas, editable en [draw.io](https://app.diagrams.net)).
 
 ---
 
