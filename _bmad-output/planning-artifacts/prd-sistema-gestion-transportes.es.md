@@ -29,10 +29,50 @@ Unimar requiere un Sistema de Gestión de Transportes (TMS) como nuevo dominio d
 
 ## 3. Contexto y Problema
 
-- **Situación actual:** Unimar opera su ecosistema de sistemas (Suite Operativa) con dominios como UMS, MMS y SIL, interoperados mediante un bróker de alta disponibilidad (XMS). El TMS se incorpora como un nuevo dominio en la capa de **Apoyo al Negocio**, para cubrir el transporte de carga que actualmente se gestiona sin un sistema dedicado. Las relaciones detalladas se consultan manualmente desde SAP, las solicitudes de transporte se gestionan de forma verbal o por correo, y no hay trazabilidad del estado de cada viaje.
-- **Problema:** Ausencia de un sistema centralizado genera retrabajo, pérdida de información, falta de trazabilidad y dificultad para escalar la operación. No hay registro formal de asignación de transportistas, choferes ni unidades vehiculares.
-- **Oportunidad:** Digitalizar el flujo de planificación reduce tiempos de asignación, elimina errores de comunicación, provee trazabilidad completa y prepara el camino para la emisión electrónica de guías (GRE) y track & trace en tiempo real.
-- **Audiencia afectada:** Gestores de Transportes (planificadores), Operadores de Documentación, Transportistas (ejecutores), Gestores Comerciales (consulta).
+### 3.1 Contexto Actual
+
+- **Operación de transporte:** Unimar gestiona el transporte de contenedores desde puerto hasta destino final. La operación actual procesa aproximadamente **{X} contenedores/mes** distribuidos en **{Y} viajes/mes** con **{Z} transportistas activos**.
+- **Ecosistema de sistemas:** Unimar opera su Suite Operativa con dominios como UMS, MMS y SIL, interoperados mediante el bróker XMS. El TMS se incorpora como nuevo dominio en la capa de Apoyo al Negocio.
+- **Proceso actual (paso a paso):**
+  1. El Gestor consulta relaciones detalladas en SAP manualmente
+  2. Copia datos de contenedores a una hoja de cálculo
+  3. Selecciona transportista según disponibilidad conocida (sin sistema)
+  4. Comunica la asignación por llamada telefónica o WhatsApp
+  5. El transportista confirma chofer y placa por la misma vía
+  6. El Gestor actualiza manualmente la hoja de cálculo
+  7. No existe registro centralizado ni trazabilidad del estado
+- **Tiempo promedio de asignación:** {X} horas desde solicitud hasta viaje confirmado
+- **Tasa de errores:** {X}% de viajes presentan datos inconsistentes (placa incorrecta, chofer no disponible, fecha desactualizada)
+- **Volumen de transportistas:** {X} transportistas con {Y} unidades vehiculares registradas
+
+### 3.2 Problema Identificado
+
+| Problema | Impacto | Consecuencia Operativa |
+| :------- | :------ | :--------------------- |
+| **Sin trazabilidad** | No se conoce la ubicación ni estado de los contenedores en tiempo real | Clientes consultan y no hay respuesta; pérdida de confianza |
+| **Comunicación fragmentada** | Información dispersa en llamadas, correos, WhatsApp y hojas de cálculo | Datos perdidos, versiones contradictorias, retrabajo |
+| **Errores de asignación** | Placa equivocada, chofer no disponible, fecha incorrecta | Retrasos en retiro de contenedores, storage portuario adicional |
+| **Sin métricas de desempeño** | No se puede medir cumplimiento de transportistas | Imposible negociar contratos con datos objetivos |
+| **Riesgo de cumplimiento** | Sin registro formal de asignaciones y confirmaciones | Exposición legal en caso de incidentes o auditorías |
+| **Cuello de botella operativo** | La planificación depende de uno o dos Gestores clave | Si se ausentan, la operación se detiene |
+| **Escalabilidad limitada** | El proceso manual no escala con volumen creciente | Cada incremento de demanda requiere más personal manual |
+
+### 3.3 Impacto Estimado
+
+| Métrica | Valor Estimado | Nota |
+| :------ | :------------- | :--- |
+| Horas/hombre perdidas en gestión manual | {X} horas/mes | Copia de datos, llamadas, actualización de hojas |
+| Costo estimado de retrabajo | USD {X}/mes | Corrección de errores, coordinación adicional |
+| Tiempo promedio de respuesta a cliente | {X} horas | Para consultas de estado de contenedor |
+| Riesgo de storage portuario por retraso | USD {X}/contenedor/día | Costo de permanencia en terminal |
+
+### 3.4 Visión Estratégica
+
+El TMS es pieza clave de la digitalización de la Suite Operativa de Unimar. Además de resolver los problemas operativos inmediatos, habilita:
+- **Emisión de GRE (Fase 2):** Sin trazabilidad de viajes, no es posible emitir guías electrónicas
+- **Track & Trace (Fase 2):** Sin datos de viaje en tiempo real, no hay seguimiento
+- **Analítica operativa:** Sin datos estructurados, no hay reportes ni métricas
+- **Experiencia del cliente:** Sin trazabilidad, el cliente no puede consultar el estado de su carga
 
 ## 4. Objetivos y Métricas de Éxito
 
