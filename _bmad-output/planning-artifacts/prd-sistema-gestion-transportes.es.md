@@ -510,15 +510,298 @@ C4Context
     Rel(tms, dpw, "Coordina citas portuarias", "Portal Web")
 ```
 
-### A.4 Prototipos de Pantallas (MVP)
+### A.4 Prototipos de Pantallas — Planificación de Transportes (MVP)
 
-| Pantalla | Descripción | Funcionalidades Asociadas |
-| :------- | :---------- | :------------------------ |
-| **Dashboard de Planificación** | Resumen visual de viajes por estado (Planificados, En Ejecución, Completados) con acceso rápido a creación | F-10 |
-| **Listado de Relaciones Detalladas** | Tabla con filtros por nave, puerto, fecha. Botón para crear solicitud de transporte | F-01 |
-| **Creación de Solicitud de Transporte** | Wizard: seleccionar contenedores → definir origen/destino → fecha tentativa → confirmar | F-02 |
-| **Asignación de Viaje** | Selectores encadenados: Transportista → Chofer → Unidad Vehicular | F-03, F-04, F-05, F-06, F-07 |
-| **Detalle de Viaje** | Cabecera, datos generales, transportista/chofer/unidad, contenedores, historial | F-08, F-09 |
+#### A.4.1 Dashboard de Planificación (F-10)
+
+```mermaid
+flowchart TB
+    subgraph HEADER[ ]
+        direction LR
+        LOGO[UNIMAR TMS]
+        NAV[Relaciones | Solicitudes | Viajes | Citas]
+        PERFIL[Usuario ▼]
+    end
+
+    subgraph KPIs[ ]
+        direction LR
+        K1[📦 Viajes Hoy: 12]
+        K2[⏳ Pendientes: 8]
+        K3[✅ Completados: 45]
+        K4[⚠️ Alertas: 3]
+    end
+
+    subgraph CONTENT[ ]
+        direction LR
+        subgraph IZQ[Filtros]
+            F1[FecDesde: __/__/__]
+            F2[FecHasta: __/__/__]
+            F3[Transportista: Todos ▼]
+            F4[Estado: Todos ▼]
+            F5[🔍 Buscar]
+        end
+        subgraph TABLA[Listado de Viajes]
+            T1[Nro | Origen | Destino | Transportista | Chofer | Placa | Estado | Acción]
+            T2[001 | Callao | Ate | TransRápido | --- | --- | 🟡 Planificado | ✏️ 👁️]
+            T3[002 | Pisco | Callao | LogiSur | Juan Pérez | ABC-123 | 🔵 En Ejecución | 👁️]
+            T4[003 | Callao | Chorrillos | TransRápido | María López | XYZ-789 | 🟢 Completado | 👁️]
+        end
+    end
+
+    subgraph ACTION[ ]
+        direction LR
+        BTN1[+ Nueva Solicitud]
+        BTN2[+ Nuevo Viaje]
+        BTN3[📥 Exportar]
+    end
+
+    HEADER --> KPIs --> CONTENT --> ACTION
+
+    style HEADER fill:#1a237e,color:#fff
+    style KPIs fill:#e3f2fd
+    style ACTION fill:#f5f5f5
+```
+
+**Componentes:**
+| Elemento | Función |
+| :------- | :------ |
+| KPIs | Métricas en tiempo real: viajes hoy, pendientes, completados, alertas |
+| Filtros | Filtro por fecha, transportista y estado |
+| Tabla | Listado de viajes con estado visual (colores) y acciones rápidas |
+| Botones | Acceso rápido a creación de solicitud y viaje |
+
+---
+
+#### A.4.2 Listado de Relaciones Detalladas (F-01)
+
+```mermaid
+flowchart TB
+    subgraph HEADER[ ]
+        direction LR
+        LOGO[UNIMAR TMS]
+        NAV[Relaciones | Solicitudes | Viajes | Citas]
+        PERFIL[Usuario ▼]
+    end
+
+    subgraph FILTERS[ ]
+        direction LR
+        F1[Nave: _______________ 🔍]
+        F2[BL: _______________ 🔍]
+        F3[Puerto: Todos ▼]
+        F4[FecArribo: __/__/__]
+        F5[Estado: Todos ▼]
+        F6[🔍 Buscar]
+    end
+
+    subgraph TABLE[ ]
+        T1[ID | Nave | BL | Puerto | FecArribo | Contenedores | Estado | Acción]
+        T2[001 | MSC Diana | BL-001 | Callao | 15/06 | 24 | ✅ Pendiente | 📋 Crear Solicitud]
+        T3[002 | MSC Diana | BL-002 | Callao | 15/06 | 12 | 🟡 Parcial | 📋 Crear Solicitud]
+        T4[003 | Maersk Selet | BL-003 | Pisco | 18/06 | 8 | ✅ Pendiente | 📋 Crear Solicitud]
+    end
+
+    subgraph PAGINATION[ ]
+        direction LR
+        P1[← Anterior]
+        P2[Página 1 de 5]
+        P3[Siguiente →]
+    end
+
+    HEADER --> FILTERS --> TABLE --> PAGINATION
+
+    style HEADER fill:#1a237e,color:#fff
+    style FILTERS fill:#e8f5e9
+    style PAGINATION fill:#f5f5f5
+```
+
+**Componentes:**
+| Elemento | Función |
+| :------- | :------ |
+| Filtros | Búsqueda por nave, BL, puerto, fecha y estado |
+| Tabla | Relaciones detalladas con contenedor de botón "Crear Solicitud" |
+| Paginación | Navegación entre páginas de resultados |
+
+---
+
+#### A.4.3 Creación de Solicitud de Transporte — Wizard (F-02)
+
+```mermaid
+flowchart LR
+    subgraph STEP1[Paso 1: Seleccionar Contenedores]
+        S1T[Relación Detallada: MSC Diana - BL-001]
+        S1C[ ]
+        S1C1[☑️ CMDU1234567 - 40']
+        S1C2[☑️ CMDU1234568 - 20']
+        S1C3[☐ CMDU1234569 - 20']
+        S1C4[☑️ CMDU1234570 - 40']
+        S1BTN[Continuar →]
+    end
+
+    subgraph STEP2[Paso 2: Definir Origen/Destino]
+        S2O[Origen: _______________ 🔍]
+        S2D[Destino: _______________ 🔍]
+        S2F[Fecha Tentativa: __/__/__]
+        S2OBS[Observaciones: _______________]
+        S2BTN[← Atrás | Continuar →]
+    end
+
+    subgraph STEP3[Paso 3: Revisar y Confirmar]
+        S3R[ ]
+        S3R1[Contenedores: 3 seleccionados]
+        S3R2[Origen: Callao]
+        S3R3[Destino: Ate]
+        S3R4[Fecha: 20/06/2026]
+        S3BTN[← Atrás | ✅ Crear Solicitud]
+    end
+
+    STEP1 --> STEP2 --> STEP3
+
+    style STEP1 fill:#e3f2fd
+    style STEP2 fill:#e8f5e9
+    style STEP3 fill:#fff3e0
+```
+
+**Componentes:**
+| Paso | Función |
+| :--- | :------ |
+| Paso 1 | Selección de contenedores de la relación detallada |
+| Paso 2 | Definición de origen, destino y fecha tentativa |
+| Paso 3 | Resumen y confirmación de la solicitud |
+
+---
+
+#### A.4.4 Asignación de Viaje (F-03, F-04, F-05, F-06, F-07)
+
+```mermaid
+flowchart TB
+    subgraph HEADER[ ]
+        direction LR
+        HEADER1[Asignar Viaje — Solicitud #001]
+    end
+
+    subgraph SOLICITUD[ ]
+        direction LR
+        SOL1[Contenedores: CMDU1234567, CMDU1234568]
+        SOL2[Origen: Callao]
+        SOL3[Destino: Ate]
+        SOL4[Fecha: 20/06/2026]
+    end
+
+    subgraph ASIGNACION[ ]
+        direction TB
+        A1[Transportista *]
+        A1S[🔍 Buscar transportista...]
+        A1R[TransRápido SAC ✓]
+        
+        A2[Chofer — Opcional en planificación]
+        A2S[🔍 Buscar chofer...]
+        A2R[Juan Pérez (DNI: 12345678)]
+        
+        A3[Unidad Vehicular — Opcional en planificación]
+        A3S[🔍 Buscar placa...]
+        A3R[ABC-123 (40')]
+        
+        A4[Fecha Salida]
+        A4D[20/06/2026]
+        
+        A5[Origen]
+        A5D[Callao]
+        
+        A6[Destino]
+        A6D[Ate]
+    end
+
+    subgraph ACTIONS[ ]
+        direction LR
+        BTN1[Cancelar]
+        BTN2[💾 Guardar Borrador]
+        BTN3[✅ Confirmar Viaje]
+    end
+
+    HEADER --> SOLICITUD --> ASIGNACION --> ACTIONS
+
+    style HEADER fill:#1a237e,color:#fff
+    style SOLICITUD fill:#e8f5e9
+    style ASIGNACION fill:#fff
+    style ACTIONS fill:#f5f5f5
+```
+
+**Componentes:**
+| Elemento | Función |
+| :------- | :------ |
+| Solicitud | Datos de la solicitud origen (contenedores, origen, destino, fecha) |
+| Transportista | Búsqueda y selección (obligatorio) |
+| Chofer | Búsqueda y selección (opcional en planificación) |
+| Unidad | Búsqueda y selección (opcional en planificación) |
+| Acciones | Guardar borrador o confirmar viaje |
+
+---
+
+#### A.4.5 Detalle de Viaje (F-08, F-09)
+
+```mermaid
+flowchart TB
+    subgraph HEADER[ ]
+        direction LR
+        HEADER1[Viaje #001]
+        HEADER2[Estado: 🟡 Planificado]
+    end
+
+    subgraph TABS[ ]
+        direction LR
+        TAB1[📋 General]
+        TAB2[📦 Contenedores]
+        TAB3[👤 Transportista]
+        TAB4[📜 Historial]
+    end
+
+    subgraph GENERAL[ ]
+        direction TB
+        G1[ ]
+        G1A[Nro Viaje: 001]
+        G1B[Origen: Callao]
+        G1C[Destino: Ate]
+        G1D[Fecha Salida: 20/06/2026]
+        G1E[Fecha Llegada Est: 20/06/2026]
+        
+        G2[Transportista]
+        G2A[Nombre: TransRápido SAC]
+        G2B[RUC: 20123456789]
+        
+        G3[Chofer]
+        G3A[Nombre: Juan Pérez]
+        G3B[DNI: 12345678]
+        G3C[Licencia: V-12345678]
+        
+        G4[Unidad Vehicular]
+        G4A[Placa: ABC-123]
+        G4B[Tipo: Container 40']
+        G4B2[Estado: Operativo]
+    end
+
+    subgraph ACTIONS[ ]
+        direction LR
+        BTN1[✏️ Editar]
+        BTN2[🔄 Reasignar]
+        BTN3[❌ Cancelar Viaje]
+        BTN4[📥 Exportar]
+    end
+
+    HEADER --> TABS --> GENERAL --> ACTIONS
+
+    style HEADER fill:#1a237e,color:#fff
+    style TABS fill:#e3f2fd
+    style GENERAL fill:#fff
+    style ACTIONS fill:#f5f5f5
+```
+
+**Componentes:**
+| Pestaña | Función |
+| :------ | :------ |
+| General | Datos del viaje: fechas, origen, destino |
+| Contenedores | Lista de contenedores asignados al viaje |
+| Transportista | Datos del transportista, chofer y unidad |
+| Historial | Auditoría de cambios (quién, cuándo, qué cambió) |
 
 ---
 
