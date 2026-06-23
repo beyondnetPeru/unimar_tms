@@ -31,7 +31,7 @@ La operación de transporte de Unimar procesa aproximadamente **{X} contenedores
 
 ### 2.2 Solución Propuesta
 
-El **Sistema de Gestión de Transportes (TMS)** es el nuevo dominio de la **Suite Operativa** de Unimar (capa Apoyo al Negocio) que digitaliza el ciclo completo de transporte de contenedores desde puerto: desde la recepción de relaciones detalladas desde SAP GTS hasta la confirmación de viaje, coordinando de forma iterativa transportistas, choferes y unidades vehiculares.
+El **Sistema de Gestión de Transportes (TMS)** es el nuevo dominio de la **Suite Operativa** de Unimar (capa Apoyo al Negocio) que digitaliza el ciclo completo de transporte de contenedores desde puerto: desde la recepción de relaciones detalladas desde SAP hasta la confirmación de viaje, coordinando de forma iterativa transportistas, choferes y unidades vehiculares.
 
 ### 2.3 Alcance del MVP
 
@@ -170,7 +170,7 @@ flowchart LR
     end
 
     subgraph EXT[Sistemas Externos]
-        SAP[SAP GTS]
+        SAP[SAP]
         SUNAT
         DPW[DPWORLD / APM]
         TT[Track & Trace]
@@ -275,12 +275,12 @@ flowchart LR
 | ID | Restricción | Categoría |
 | :-- | :---------- | :-------- |
 | R-01 | Las guías de remisión electrónicas deben cumplir con la normativa SUNAT (fuera de MVP, considerar en fase 2) | Regulatoria |
-| R-02 | Integración con SAP vía BAPI existente; datos maestros provistos por SAP GTS | Técnica |
+| R-02 | Integración con SAP vía BAPI existente; datos maestros provistos por SAP | Técnica |
 | R-03 | Stack tecnológico definido en ADR-0001 (NestJS, PostgreSQL, React) | Técnica |
 | R-04 | El MVP está limitado a planificación de transportes; la operación (reasignación, aceptación, excepciones, registro fotográfico) es Fase 2 | Alcance |
 | R-05 | El TMS depende de XMS como bróker de integración para interoperar con otros dominios de la Suite Operativa | Técnica |
 | R-06 | El portal de DPWORLD/APM es un sistema externo sin control sobre disponibilidad ni cambios de interfaz | Operativa |
-| R-07 | Los datos maestros (transportistas, choferes, unidades) dependen de SAP GTS; si SAP no provee datos, el TMS no puede funcionar | Dependencia |
+| R-07 | Los datos maestros (transportistas, choferes, unidades) dependen de SAP; si SAP no provee datos, el TMS no puede funcionar | Dependencia |
 
 ### 8.2 Supuestos
 
@@ -358,7 +358,7 @@ El PRD se considera aprobado cuando:
 
 ```mermaid
 flowchart LR
-    subgraph SAP[SAP GTS - Back Office]
+    subgraph SAP[SAP - Back Office]
         OS[Orden de Servicio]
         MD[Master Data<br/>Transportistas, Choferes, Placas,<br/>Guías, Manifiestos, BL, Contenedores]
     end
@@ -400,7 +400,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     subgraph IN[Entrada]
-        SAP[SAP GTS] -->|Relación Detallada por Nave + BL| RD[Relación Detallada<br/>ID+NRO, Nave, IP, Manifiesto,<br/>Puertos, Fechas, IMO, Estado]
+        SAP[SAP] -->|Relación Detallada por Nave + BL| RD[Relación Detallada<br/>ID+NRO, Nave, IP, Manifiesto,<br/>Puertos, Fechas, IMO, Estado]
     end
 
     subgraph PLAN[Planificación]
@@ -437,7 +437,7 @@ C4Context
 
     System(tms, "TMS", "Sistema de Gestión de Transportes")
 
-    System_Ext(sap, "SAP GTS", "Back Office - Órdenes de Servicio")
+    System_Ext(sap, "SAP", "Back Office - Órdenes de Servicio")
     System_Ext(sunat, "SUNAT Middleware", "Interfaces para GRE")
     System_Ext(tnt, "Track and Trace", "Sistema de Tracking existente")
     System_Ext(ns, "Notification Service", "Notificaciones a transportistas")
