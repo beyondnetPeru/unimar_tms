@@ -25,7 +25,57 @@
 
 ## 2. Resumen Ejecutivo
 
-Unimar requiere un Sistema de Gestión de Transportes (TMS) como nuevo dominio de la **Suite Operativa** (capa Apoyo al Negocio), para gestionar el ciclo completo de descarga de contenedores desde puerto, desde la relación detallada de la nave hasta la emisión de la guía de remisión electrónica (GRE) y el seguimiento del viaje del transportista. Actualmente la planificación se gestiona de forma manual sin trazabilidad digital. El TMS automatizará la creación de solicitudes de transporte, asignación de transportistas/choferes/unidades, y preparará la base para la emisión electrónica de guías y track & trace. El MVP cubre el flujo de planificación de transportes. El horizonte de entrega del MVP es Q3 2026.
+### 2.1 Declaración del Problema
+
+La operación de transporte de Unimar procesa aproximadamente **{X} contenedores/mes** distribuidos en **{Y} viajes/mes** sin un sistema dedicado de gestión. El proceso actual depende de hojas de cálculo, llamadas telefónicas y WhatsApp, generando **{X} horas/hombre de retrabajo mensual**, una tasa de errores del **{X}%** en datos de asignación (placa, chofer, fecha) y **cero trazabilidad** en tiempo real del estado de los contenedores.
+
+### 2.2 Solución Propuesta
+
+El **Sistema de Gestión de Transportes (TMS)** es el nuevo dominio de la **Suite Operativa** de Unimar (capa Apoyo al Negocio) que digitaliza el ciclo completo de transporte de contenedores desde puerto: desde la recepción de relaciones detalladas desde SAP GTS hasta la confirmación de viaje, coordinando de forma iterativa transportistas, choferes y unidades vehiculares.
+
+### 2.3 Alcance del MVP
+
+El MVP (Q3 2026) cubre las siguientes funcionalidades:
+
+| Categoría | Funcionalidades |
+| :-------- | :-------------- |
+| **Gestión de datos** | Relaciones detalladas desde SAP, búsqueda de contenedores |
+| **Planificación** | Creación de solicitudes, clonación, asignación de viajes |
+| **Coordinación** | Selección de transportista, chofer y unidad (asignación iterativa con el transportista) |
+| **Citas portuarias** | Coordinación con DPWORLD/APM |
+| **Visibilidad** | Dashboard de planificación, calendario de citas, alertas de vencimiento |
+| **Operación** | Aceptación/rechazo de viaje, cancelación, reasignación, registro fotográfico |
+| **Auditoría** | Historial de cambios, exportación de datos |
+
+### 2.4 Beneficios Esperados
+
+| Beneficio | Valor Esperado |
+| :-------- | :------------- |
+| Reducción del tiempo de asignación | De {X} horas a < 2 horas |
+| Trazabilidad de viajes | 100% de viajes con registro digital |
+| Eliminación de errores de comunicación | {X}% reducción en datos inconsistentes |
+| Base para emisión de GRE | 80% de solicitudes listas para Fase 2 |
+| Visibilidad operativa | Dashboard en tiempo real para Gestores |
+
+### 2.5 Fases de Entrega
+
+| Fase | Entregable | Horizonte |
+| :--- | :--------- | :-------- |
+| **Fase 1 — MVP** | Planificación y asignación de transportes | Q3 2026 |
+| **Fase 2 — GRE** | Emisión de guías de remisión electrónicas a SUNAT | Q1 2027 |
+| **Fase 3 — Track & Trace** | Seguimiento en tiempo real y notificaciones | Q2 2027 |
+| **Fase 4 — App Móvil** | Aplicación móvil para transportistas | Q3 2027 |
+
+### 2.6 Inversión Estimada
+
+| Concepto | Estimado |
+| :------- | :------- |
+| Desarrollo MVP (Fase 1) | USD {X} |
+| Integración SAP | USD {X} |
+| Infraestructura y DevOps | USD {X} |
+| **Total MVP** | **USD {X}** |
+
+> *Nota: La inversión para Fases 2-4 se estimará al finalizar la Fase 1 con datos reales de complejidad.*
 
 ## 3. Contexto y Problema
 
