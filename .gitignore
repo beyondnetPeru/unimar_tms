@@ -147,3 +147,6 @@ _bmad-output/
 
 # BMAD Method - user personal overrides
 _bmad/custom/*.user.toml
+
+# Husky
+.husky/_

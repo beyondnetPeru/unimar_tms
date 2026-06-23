@@ -23,6 +23,12 @@ Este documento registra el **triaje de patrones** del estándar corporativo `uni
 | R-29 | Sección 3 completa (Requisitos Técnicos) | Adopt | — | Sin divergencia |
 | R-30 | Sección 2 completa (Actores) | Adopt | — | Sin divergencia |
 
+## Triage de ADRs de Referencia (unimar_arch)
+
+| ID | Título | Operación | ADR Local | Notas |
+| :-- | :----- | :-------- | :-------- | :---- |
+| ADR-0050 | Estrategia de Ramificación GitFlow | Extend | ADR-0003 | Adaptación del tracker ID y tooling al contexto TMS |
+
 ## Triage de Reglas de Satélite (unimar_arch)
 
 | ID | Título | Operación | ADR Local | Notas |

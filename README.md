@@ -46,17 +46,26 @@ unimar_tms/
 ├── MASTER_INDEX.md              # Ruteo exhaustivo
 ├── CONTRIBUTING.md              # Guía de contribución
 ├── DOCUMENTATION_VERSIONS.md    # Log de versiones
+├── commitlint.config.js         # Validación Conventional Commits
+├── .github/
+│   └── PULL_REQUEST_TEMPLATE.md # Template de PR
 ├── .harness/
-│   └── rules/
-│       ├── global-rules.md          # Reglas R-02 a R-30 (heredadas)
-│       └── satellite-repo-rules.md  # Reglas S-01 a S-15 (heredadas)
+│   ├── rules/
+│   │   ├── global-rules.md          # Reglas R-02 a R-30 (heredadas)
+│   │   └── satellite-repo-rules.md  # Reglas S-01 a S-15 (heredadas)
+│   └── scripts/validate-docs.mjs    # Validador de documentación
+├── .husky/
+│   ├── commit-msg               # Hook: valida commit con commitlint
+│   └── pre-commit               # Hook: valida documentación
 ├── reference/
 │   ├── architecture/
-│   │   ├── adrs/                    # ADRs locales (ADR-0001, ADR-0002...)
+│   │   ├── adrs/                    # ADRs locales (ADR-0001, ADR-0002, ADR-0003)
 │   │   ├── blueprints/              # Diagramas C4 (pendiente)
 │   │   └── stack/                   # Stack tecnológico autorizado TMS
 │   ├── governance/
-│   │   └── glosario-tms.es.md        # Glosario de términos TMS
+│   │   ├── glosario-tms.es.md        # Glosario de términos TMS
+│   │   └── sdlc/
+│   │       └── estrategia-ramificacion.es.md  # GitFlow TMS
 │   ├── knowledge/dominio/           # Conocimiento de dominio TMS
 │   ├── navigation/                  # Índices de navegación
 │   └── getting-started/             # Guía de inicio rápido
@@ -66,6 +75,16 @@ unimar_tms/
 ├── docs/                           # Documentación de dominio
 └── license/                        # Documentación legal
 ```
+
+## GitFlow
+
+Estrategia **GitFlow extendido** con ramas `main`, `develop`, `qa`, `uat` y `feature/TMS-*`, `release/v*`, `hotfix/TMS-*`.
+
+- Commits: Conventional Commits v1.0.0 (commitlint + husky)
+- Merge: `squash` a develop, `--no-ff` a main
+- PRs: template en `.github/PULL_REQUEST_TEMPLATE.md`
+- Versionado: SemVer con tags anotados
+- Ver [`reference/governance/sdlc/estrategia-ramificacion.es.md`](./reference/governance/sdlc/estrategia-ramificacion.es.md)
 
 ## Licencia
 
