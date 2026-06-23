@@ -124,28 +124,32 @@ El TMS es pieza clave de la digitalización de la Suite Operativa de Unimar. Ade
 
 ## 5. Alcance
 
-### 5.1 Dentro del Alcance — MVP (Fase 1)
+### 5.1 Dentro del Alcance — MVP Planificación (Fase 1)
 
 | Categoría | Funcionalidades Incluidas |
 | :-------- | :------------------------ |
 | **Gestión de datos** | F-01 Relaciones detalladas desde SAP, F-17 Búsqueda rápida de contenedores |
-| **Solicitudes** | F-02 Creación de solicitud, F-18 Clonar solicitud, F-25 Validación de solicitud (mismo BL, mínimo 1 contenedor) |
+| **Solicitudes** | F-02 Creación de solicitud, F-18 Clonar solicitud |
 | **Planificación y asignación** | F-03 Asignación de viaje, F-04 Selección de transportista, F-05 Selección de chofer, F-06 Selección de unidad vehicular, F-07 Confirmación de viaje |
 | **Coordinación iterativa** | Asignación bidireccional UNIMAR-transportista para chofer y unidad (RN-06) |
 | **Citas portuarias** | F-11 Coordinación de citas con DPWORLD/APM, F-19 Vista calendario de citas |
-| **Visibilidad** | F-08 Consulta de viajes, F-09 Edición de viaje, F-10 Dashboard de planificación, F-20 Alertas de vencimiento, F-40 Métricas en tiempo real |
-| **Operación** | F-12 Cancelación de solicitud/viaje, F-13 Reasignación de viaje, F-16 Aceptación/rechazo de viaje, F-22 Gestión de excepciones, F-23 Registro fotográfico |
+| **Visibilidad** | F-08 Consulta de viajes, F-09 Edición de viaje, F-10 Dashboard de planificación, F-20 Alertas de vencimiento |
+| **Gestión** | F-12 Cancelación de solicitud/viaje antes de ejecución |
 | **Auditoría** | F-14 Historial de cambios, F-21 Exportar datos |
-| **Notificaciones** | F-15 Notificaciones al transportista (correo, SMS, push) |
 | **Integración** | Integración batch con SAP para maestro de datos (transportistas, choferes, unidades) |
 | **Reglas de negocio** | RN-01 a RN-40 — 40 reglas de consistencia, estados, fechas, validación e integración |
 
-### 5.2 Fuera del Alcance — Fases Posteriores
+### 5.2 Fuera del Alcance MVP — Fases Posteriores
 
-| Fase | Funcionalidad | Horizonte Estimado |
-| :--- | :------------ | :----------------- |
-| **Fase 2** | Emisión de guías de remisión electrónicas (GRE) a SUNAT | Q1 2027 |
-| **Fase 2** | Integración en tiempo real con SAP (BAPI) | Q1 2027 |
+| Fase | Funcionalidad | Horizonte |
+| :--- | :------------ | :-------- |
+| **Fase 2 — Operación** | F-13 Reasignación de viaje | Q4 2026 |
+| **Fase 2 — Operación** | F-15 Notificaciones mejoradas (asignación, cambios, recordatorios) | Q4 2026 |
+| **Fase 2 — Operación** | F-16 Aceptación/rechazo de viaje por transportista | Q4 2026 |
+| **Fase 2 — Operación** | F-22 Gestión de excepciones (demoras, daños, rechazos) | Q4 2026 |
+| **Fase 2 — Operación** | F-23 Registro fotográfico al inicio/fin de viaje | Q4 2026 |
+| **Fase 2 — Emisión** | Emisión de guías de remisión electrónicas (GRE) a SUNAT | Q1 2027 |
+| **Fase 2 — Emisión** | Integración en tiempo real con SAP (BAPI) | Q1 2027 |
 | **Fase 3** | Track & Trace en tiempo real | Q2 2027 |
 | **Fase 4** | Aplicación móvil para transportistas | Q3 2027 |
 | **Post-MVP** | Portal de consulta para clientes | Por definir |
