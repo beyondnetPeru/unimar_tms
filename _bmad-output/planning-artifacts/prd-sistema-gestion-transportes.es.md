@@ -66,17 +66,6 @@ El MVP (Q3 2026) cubre las siguientes funcionalidades:
 | **Fase 3 — Track & Trace** | Seguimiento en tiempo real y notificaciones | Q2 2027 |
 | **Fase 4 — App Móvil** | Aplicación móvil para transportistas | Q3 2027 |
 
-### 2.6 Inversión Estimada
-
-| Concepto | Estimado |
-| :------- | :------- |
-| Desarrollo MVP (Fase 1) | USD {X} |
-| Integración SAP | USD {X} |
-| Infraestructura y DevOps | USD {X} |
-| **Total MVP** | **USD {X}** |
-
-> *Nota: La inversión para Fases 2-4 se estimará al finalizar la Fase 1 con datos reales de complejidad.*
-
 ## 3. Contexto y Problema
 
 ### 3.1 Contexto Actual
