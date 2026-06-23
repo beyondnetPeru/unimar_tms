@@ -25,11 +25,11 @@
 
 ## 2. Resumen Ejecutivo
 
-Unimar requiere un Sistema de Gestión de Transportes (TMS) para gestionar el ciclo completo de descarga de contenedores desde puerto, desde la relación detallada de la nave hasta la emisión de la guía de remisión electrónica (GRE) y el seguimiento del viaje del transportista. Actualmente la planificación se gestiona de forma manual sin trazabilidad digital. El TMS automatizará la creación de solicitudes de transporte, asignación de transportistas/choferes/unidades, y preparará la base para la emisión electrónica de guías y track & trace. El MVP cubre el flujo de planificación de transportes. El horizonte de entrega del MVP es Q3 2026.
+Unimar requiere un Sistema de Gestión de Transportes (TMS) como nuevo dominio de la **Suite Operativa** (capa Apoyo al Negocio), para gestionar el ciclo completo de descarga de contenedores desde puerto, desde la relación detallada de la nave hasta la emisión de la guía de remisión electrónica (GRE) y el seguimiento del viaje del transportista. Actualmente la planificación se gestiona de forma manual sin trazabilidad digital. El TMS automatizará la creación de solicitudes de transporte, asignación de transportistas/choferes/unidades, y preparará la base para la emisión electrónica de guías y track & trace. El MVP cubre el flujo de planificación de transportes. El horizonte de entrega del MVP es Q3 2026.
 
 ## 3. Contexto y Problema
 
-- **Situación actual:** La planificación de transportes para descarga de contenedores se realiza sin un sistema dedicado. Las relaciones detalladas se consultan manualmente desde SAP, las solicitudes de transporte se gestionan de forma verbal o por correo, y no hay trazabilidad del estado de cada viaje.
+- **Situación actual:** Unimar opera su ecosistema de sistemas (Suite Operativa) con dominios como UMS, MMS y SIL, interoperados mediante un bróker de alta disponibilidad (XMS). El TMS se incorpora como un nuevo dominio en la capa de **Apoyo al Negocio**, para cubrir el transporte de carga que actualmente se gestiona sin un sistema dedicado. Las relaciones detalladas se consultan manualmente desde SAP, las solicitudes de transporte se gestionan de forma verbal o por correo, y no hay trazabilidad del estado de cada viaje.
 - **Problema:** Ausencia de un sistema centralizado genera retrabajo, pérdida de información, falta de trazabilidad y dificultad para escalar la operación. No hay registro formal de asignación de transportistas, choferes ni unidades vehiculares.
 - **Oportunidad:** Digitalizar el flujo de planificación reduce tiempos de asignación, elimina errores de comunicación, provee trazabilidad completa y prepara el camino para la emisión electrónica de guías (GRE) y track & trace en tiempo real.
 - **Audiencia afectada:** Gestores de Transportes (planificadores), Operadores de Documentación, Transportistas (ejecutores), Gestores Comerciales (consulta).
@@ -67,29 +67,30 @@ Unimar requiere un Sistema de Gestión de Transportes (TMS) para gestionar el ci
 
 ```mermaid
 flowchart LR
-    subgraph SAP[SAP GTS]
-        RD[Relación Detallada]
-        MD[Maestros]
+    subgraph SUITE[Suite Operativa UNIMAR]
+        direction TB
+        XMS[XMS - Bróker de Integración]
+        UMS[UMS]
+        MMS[MMS]
+        SIL[SIL]
+        TMS[TMS - Nuevo]
     end
 
-    subgraph MVP[MVP TMS]
-        ST[Solicitud Transporte]
-        VJ[Asignación Viaje]
-        DSH[Dashboard]
+    subgraph EXT[Sistemas Externos]
+        SAP[SAP GTS]
+        SUNAT
+        DPW[DPWORLD / APM]
+        TT[Track & Trace]
     end
 
-    subgraph ACT[Actores]
-        GT[Gestor Transportes]
-        TR[Transportista]
-    end
-
-    RD --> ST
-    MD --> VJ
-    ST --> VJ
-    GT --> DSH
-    GT --> ST
-    GT --> VJ
-    TR --> VJ
+    TMS --- XMS
+    UMS --- XMS
+    MMS --- XMS
+    SIL --- XMS
+    TMS -->|BAPI| SAP
+    TMS -->|WS| SUNAT
+    TMS -->|Portal| DPW
+    TMS -->|API| TT
 ```
 
 ## 6. Actores y Casos de Uso de Alto Nivel
@@ -160,6 +161,7 @@ El PRD se considera aprobado cuando:
 - El **Reporte Resumen de Pruebas** citará los criterios de aceptación funcionales definidos aquí.
 - Las **Notas de Lanzamiento** resumirán el valor entregado contra los objetivos declarados.
 - Los **ADRs** referenciados en este PRD se enlazan desde la sección de Restricciones y Supuestos.
+- Los **contratos de integración** con otros dominios de la Suite Operativa (vía XMS) se definirán en fase de arquitectura.
 
 ## 12. Glosario
 
