@@ -1,0 +1,20 @@
+{
+  "default": true,
+  "MD003": { "style": "atx" },
+  "MD004": { "style": "asterisk" },
+  "MD007": { "indent": 2 },
+  "MD013": false,
+  "MD024": true,
+  "MD025": true,
+  "MD026": true,
+  "MD029": { "style": "ordered" },
+  "MD033": false,
+  "MD034": true,
+  "MD041": true,
+  "MD042": true,
+  "MD043": false,
+  "MD044": true,
+  "MD046": { "style": "fenced" },
+  "MD047": true,
+  "MD048": { "style": "backtick" }
+}
