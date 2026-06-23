@@ -117,6 +117,11 @@ flowchart LR
 | F-09 | Edición de Viaje | Edición de datos del viaje antes de su ejecución |
 | F-10 | Dashboard de Planificación | Resumen visual de viajes por estado con acceso rápido a creación |
 | F-11 | Coordinación de Citas Portuarias | Gestión de citas con terminales portuarias (DPWORLD/APM): confirmación de arribo/zarpe y agendamiento de citas de retiro de contenedores |
+| F-12 | Cancelación de Solicitud/Viaje | Cancelación de solicitud o viaje antes de su ejecución, con registro del motivo |
+| F-13 | Reasignación de Viaje | Reasignación del viaje a otro transportista cuando el original rechaza o no puede cumplir |
+| F-14 | Historial de Cambios | Registro de auditoría de todos los cambios en solicitudes y viajes: actor, timestamp, campo, valor anterior y nuevo |
+| F-15 | Notificaciones al Transportista | Envío de notificaciones (correo, SMS, push) por asignación, cambios y recordatorios de viaje |
+| F-16 | Aceptación/Rechazo de Viaje | El transportista acepta o rechaza formalmente un viaje asignado antes de ejecutarlo |
 
 ## 8. Reglas de Negocio Explícitas
 
@@ -144,6 +149,17 @@ flowchart LR
 | RN-20 | Si la sincronización SAP falla, el sistema opera con el último conjunto de datos válido |
 | RN-21 | El transportista debe ser notificado al momento de asignársele un viaje |
 | RN-22 | El Gestor debe ser notificado cuando el transportista proporciona chofer y unidad vehicular |
+| RN-23 | Una solicitud de transporte puede generar múltiples viajes cuando la cantidad de contenedores excede la capacidad de una unidad |
+| RN-24 | Un viaje puede contener múltiples contenedores siempre que pertenezcan a la misma solicitud |
+| RN-25 | Una solicitud de transporte debe contener al menos un contenedor |
+| RN-26 | El transportista debe aceptar o rechazar formalmente un viaje asignado |
+| RN-27 | Los datos del chofer deben validarse contra el maestro (licencia, vigencia) |
+| RN-28 | La unidad vehicular debe tener estado operativo en el maestro para poder asignarse |
+| RN-29 | No se puede asignar un viaje si el transportista tiene otro viaje en conflicto de horario/fecha para la misma unidad |
+| RN-30 | El historial de cambios debe registrar: actor, timestamp, campo modificado, valor anterior y nuevo |
+| RN-31 | Si el transportista rechaza el viaje, el Gestor debe ser notificado para reasignar |
+| RN-32 | La solicitud de transporte debe referenciar al menos una Orden de Servicio de SAP |
+| RN-33 | Un contenedor con viaje en ejecución no puede ser asignado a otro viaje |
 
 ## 8. Restricciones y Supuestos
 
