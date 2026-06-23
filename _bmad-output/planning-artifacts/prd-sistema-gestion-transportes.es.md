@@ -122,6 +122,13 @@ flowchart LR
 | F-14 | Historial de Cambios | Registro de auditoría de todos los cambios en solicitudes y viajes: actor, timestamp, campo, valor anterior y nuevo |
 | F-15 | Notificaciones al Transportista | Envío de notificaciones (correo, SMS, push) por asignación, cambios y recordatorios de viaje |
 | F-16 | Aceptación/Rechazo de Viaje | El transportista acepta o rechaza formalmente un viaje asignado antes de ejecutarlo |
+| F-17 | Búsqueda Rápida de Contenedores | Búsqueda directa por número de contenedor sin navegar por relaciones detalladas |
+| F-18 | Clonar Solicitud de Transporte | Duplicar una solicitud existente con sus contenedores para agilizar creación de solicitudes similares |
+| F-19 | Vista Calendario de Citas Portuarias | Vista visual de citas agendadas por día/semana para evitar solapamientos |
+| F-20 | Alertas de Vencimiento | Notificaciones automáticas por contenedores sin asignar o citas próximas a vencer |
+| F-21 | Exportar Datos (Excel/PDF) | Exportación de solicitudes, viajes y reportes para compartir con transportistas y clientes |
+| F-22 | Gestión de Excepciones | Proceso formal para registrar y resolver incidencias: demoras, daños, rechazos, contenedores varados |
+| F-23 | Registro Fotográfico | Evidencia fotográfica al inicio y fin de viaje para reclamaciones y auditoría |
 
 ## 8. Reglas de Negocio Explícitas
 
@@ -160,6 +167,13 @@ flowchart LR
 | RN-31 | Si el transportista rechaza el viaje, el Gestor debe ser notificado para reasignar |
 | RN-32 | La solicitud de transporte debe referenciar al menos una Orden de Servicio de SAP |
 | RN-33 | Un contenedor con viaje en ejecución no puede ser asignado a otro viaje |
+| RN-34 | Debe existir un tiempo mínimo de anticipación para crear un viaje (ej. 24 horas antes del retiro) |
+| RN-35 | Un transportista con más del 20% de viajes rechazados en los últimos 30 días debe ser marcado como riesgoso |
+| RN-36 | Los contenedores de un mismo BL deben viajar juntos salvo excepción justificada |
+| RN-37 | La capacidad máxima de contenedores por viaje depende del tipo de unidad vehicular (20' o 40') |
+| RN-38 | El sistema debe alertar sobre contenedores huérfanos (sin viaje asignado después de X días) |
+| RN-39 | Las notificaciones deben tener canal de fallback (email → SMS → push) |
+| RN-40 | El dashboard debe mostrar métricas en tiempo real: viajes hoy, pendientes, completados, alertas |
 
 ## 8. Restricciones y Supuestos
 
