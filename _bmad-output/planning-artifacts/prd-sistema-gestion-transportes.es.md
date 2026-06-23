@@ -110,9 +110,9 @@ flowchart LR
 | F-02 | Creación de Solicitud de Transporte | El Gestor crea una solicitud seleccionando contenedores de una relación detallada |
 | F-03 | Asignación de Viaje | El Gestor asigna la solicitud a un transportista, definiendo origen, destino y fecha |
 | F-04 | Selección de Transportista | Búsqueda y selección de transportista desde maestro de datos |
-| F-05 | Selección de Chofer | Búsqueda y selección de chofer asociado al transportista |
-| F-06 | Selección de Unidad Vehicular | Búsqueda y selección de placa/unidad asociada al transportista |
-| F-07 | Confirmación de Viaje | Confirmación formal que notifica al transportista |
+| F-05 | Selección de Chofer | Búsqueda y selección de chofer asociado al transportista. **Opcional en planificación**, se confirma al momento de la ejecución del viaje |
+| F-06 | Selección de Unidad Vehicular | Búsqueda y selección de placa/unidad asociada al transportista. **Opcional en planificación**, se confirma al momento de la ejecución del viaje |
+| F-07 | Confirmación de Viaje | Confirmación formal que notifica al transportista. En esta etapa se completan chofer y unidad vehicular si no fueron asignados en la planificación |
 | F-08 | Consulta de Viajes Planificados | Listado de viajes con estado, filtros por fecha, transportista, estado |
 | F-09 | Edición de Viaje | Edición de datos del viaje antes de su ejecución |
 | F-10 | Dashboard de Planificación | Resumen visual de viajes por estado con acceso rápido a creación |
@@ -127,7 +127,7 @@ flowchart LR
 | RN-03 | Una relación detallada puede pertenecer a diferentes orígenes: depósito, almacenes, etc. |
 | RN-04 | Una Orden de Servicio (SAP) puede tener asociados múltiples Pedidos de Transporte en diferentes momentos |
 | RN-05 | El Pedido de Transporte se referencia desde la OS SAP |
-| RN-06 | La asignación de viaje sigue la jerarquía: Transportista → Chofer → Unidad Vehicular |
+| RN-06 | La asignación de viaje sigue la jerarquía: Transportista → Chofer → Unidad Vehicular. En planificación solo el transportista es obligatorio; chofer y unidad pueden asignarse al confirmar el viaje |
 | RN-07 | Para carga suelta se requieren fotos, packing list y dimensiones (fase posterior) |
 | RN-08 | La coordinación de citas portuarias se realiza a través del portal de DPWORLD/APM |
 
