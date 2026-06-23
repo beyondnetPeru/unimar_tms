@@ -50,6 +50,7 @@ Unimar requiere un Sistema de Gestión de Transportes (TMS) como nuevo dominio d
 - Gestión de relaciones detalladas de contenedores desde SAP
 - Creación de solicitudes de transporte
 - Asignación de viajes con transportista, chofer y unidad vehicular
+- Coordinación de citas portuarias (DPWORLD/APM)
 - Consulta de viajes planificados con filtros
 - Dashboard de planificación
 - Integración batch con SAP para maestro de datos
@@ -58,7 +59,6 @@ Unimar requiere un Sistema de Gestión de Transportes (TMS) como nuevo dominio d
 
 - Emisión de guías de remisión electrónicas (GRE) a SUNAT
 - Track & Trace en tiempo real
-- Coordinación de citas portuarias (DPWORLD/APM)
 - Aplicación móvil para transportistas
 - Portal de consulta para clientes
 - Reportería avanzada
@@ -116,6 +116,7 @@ flowchart LR
 | F-08 | Consulta de Viajes Planificados | Listado de viajes con estado, filtros por fecha, transportista, estado |
 | F-09 | Edición de Viaje | Edición de datos del viaje antes de su ejecución |
 | F-10 | Dashboard de Planificación | Resumen visual de viajes por estado con acceso rápido a creación |
+| F-11 | Coordinación de Citas Portuarias | Gestión de citas con terminales portuarias (DPWORLD/APM): confirmación de arribo/zarpe y agendamiento de citas de retiro de contenedores |
 
 ## 8. Reglas de Negocio Explícitas
 
@@ -128,6 +129,7 @@ flowchart LR
 | RN-05 | El Pedido de Transporte se referencia desde la OS SAP |
 | RN-06 | La asignación de viaje sigue la jerarquía: Transportista → Chofer → Unidad Vehicular |
 | RN-07 | Para carga suelta se requieren fotos, packing list y dimensiones (fase posterior) |
+| RN-08 | La coordinación de citas portuarias se realiza a través del portal de DPWORLD/APM |
 
 ## 8. Restricciones y Supuestos
 
