@@ -142,8 +142,10 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# BMAD Method - generated artifacts (regenerated on demand)
-_bmad-output/
+# BMAD Method - cache/working files only (artifacts are tracked)
+_bmad-output/**/cache/
+_bmad-output/**/temp/
+_bmad-output/**/*.log
 
 # BMAD Method - user personal overrides
 _bmad/custom/*.user.toml
