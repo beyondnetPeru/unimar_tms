@@ -67,15 +67,7 @@ Abre la fase del ciclo de vida en la que trabajas. Cada sección agrupa los docu
 <details>
 <summary><strong>Fase 01 — Diseño y Arquitectura</strong></summary>
 
-| Documento | Descripción | Tipo |
-|---|---|---|
-| [DECISIONS.md](./DECISIONS.md) | Triaje Adopt/Extend/Override/N/A de patrones unimar_arch | Registro |
-| [ADR-0001 — Stack Tecnológico TMS](./reference/architecture/adrs/0001-stack-tecnologico-tms.es.md) | NestJS, PostgreSQL, Redis, RabbitMQ, React, Flutter (post-MVP) | Decisión |
-| [ADR-0002 — Actores del Dominio TMS](./reference/architecture/adrs/0002-actores-dominio-tms.es.md) | Gestor de Transportes, Transportista, Operador de Transmisiones, Gestor Comercial | Decisión |
-| [ADR-0003 — GitFlow TMS Extendido](./reference/architecture/adrs/0003-gitflow-tms-extendido.es.md) | Ramas `feature/TMS-*`, `release/v*`, `hotfix/TMS-*` | Decisión |
-| [Stack Tecnológico Autorizado TMS](./reference/architecture/stack/stack-tecnologico-autorizado-tms.es.md) | Lista aprobada de lenguajes, frameworks, herramientas | Estándar |
-| [Glosario TMS](./reference/governance/glosario-tms.es.md) | Terminología controlada del dominio de transporte | Referencia |
-| [Estrategia de Ramificación](./reference/governance/sdlc/estrategia-ramificacion.es.md) | GitFlow extendido para el TMS | Guía |
+*Pendiente — fase no iniciada. Completar PRD y aprobación de stakeholders para comenzar.*
 
 </details>
 
