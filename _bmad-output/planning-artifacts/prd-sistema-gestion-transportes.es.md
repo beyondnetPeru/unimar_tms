@@ -130,6 +130,20 @@ flowchart LR
 | RN-06 | La asignación de chofer y unidad vehicular es un proceso de coordinación iterativo entre UNIMAR y el transportista. UNIMAR puede asignar desde el maestro, el transportista puede proponer o confirmar, y la asignación se cierra cuando ambas partesvalidan. Esta coordinación puede ocurrir en planificación, confirmación o hasta antes de iniciar el viaje |
 | RN-07 | Para carga suelta se requieren fotos, packing list y dimensiones (fase posterior) |
 | RN-08 | La coordinación de citas portuarias se realiza a través del portal de DPWORLD/APM |
+| RN-09 | Un contenedor solo puede estar asignado a un viaje activo a la vez |
+| RN-10 | La solicitud de transporte solo puede incluir contenedores de la misma relación detallada |
+| RN-11 | El chofer y la unidad deben estar asociados al transportista seleccionado en el maestro de datos |
+| RN-12 | Origen y destino de un viaje no pueden ser iguales |
+| RN-13 | Un viaje no puede confirmarse sin al menos el transportista asignado |
+| RN-14 | Un viaje en ejecución (con checkpoint registrado) no puede editarse |
+| RN-15 | Un viaje solo puede cancelarse antes de iniciar la ejecución |
+| RN-16 | La fecha del viaje no puede ser anterior a la fecha actual al momento de creación |
+| RN-17 | La fecha de cita portuaria debe ser coherente con la fecha estimada de arribo de la nave |
+| RN-18 | Solo contenedores con estado pendiente o planificado en la relación detallada pueden asignarse a viajes |
+| RN-19 | La sincronización batch de maestros con SAP debe ejecutarse mínimo una vez al día |
+| RN-20 | Si la sincronización SAP falla, el sistema opera con el último conjunto de datos válido |
+| RN-21 | El transportista debe ser notificado al momento de asignársele un viaje |
+| RN-22 | El Gestor debe ser notificado cuando el transportista proporciona chofer y unidad vehicular |
 
 ## 8. Restricciones y Supuestos
 
