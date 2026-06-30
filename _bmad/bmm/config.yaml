@@ -11,6 +11,6 @@ project_knowledge: "{project-root}/docs"
 # Core Configuration Values
 user_name: Beyondnet
 project_name: unimar_tms
-communication_language: English
-document_output_language: English
+communication_language: Español
+document_output_language: Español
 output_folder: _bmad-output

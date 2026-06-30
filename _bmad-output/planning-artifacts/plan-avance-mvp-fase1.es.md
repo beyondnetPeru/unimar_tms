@@ -41,9 +41,9 @@ Estas iniciativas **NO dependen** de datos operativos reales ni aprobación fina
 | **Manejo de errores** | neverthrow | 6.x | Result<T, E> type-safe |
 | **Mensajería** | RabbitMQ | 3.x | Eventos de dominio (fase posterior) |
 | **Cache** | Redis | 7.x | Sesiones, datos maestros (fase posterior) |
-| **Frontend web** | Angular | 17+ | Interfaz de usuario |
+| **Frontend web** | React | 18+ | Interfaz de usuario |
 | **Estilos** | Tailwind CSS | 3.x | Utilidades CSS obligatorias |
-| **UI Components** | PrimeNG | 18+ | Componentes de negocio |
+| **UI Components** | A definir en Fase 2 | — | Librería de componentes React |
 | **Testing** | Vitest | 1.x | Tests unitarios |
 | **E2E Testing** | Playwright | 1.x | Automatización full-stack |
 | **Docs API** | Swagger/OpenAPI | 7.x | Documentación automática de endpoints |
@@ -337,55 +337,49 @@ apps/backend/
 ```
 apps/frontend/
 ├── src/
-│   ├── app/
-│   │   ├── core/
-│   │   │   ├── guards/
-│   │   │   │   └── auth.guard.ts
-│   │   │   ├── interceptors/
-│   │   │   │   ├── jwt.interceptor.ts
-│   │   │   │   └── error.interceptor.ts
-│   │   │   └── services/
-│   │   │       ├── http-base.service.ts
-│   │   │       ├── auth.service.ts
-│   │   │       └── toast.service.ts
-│   │   ├── shared/
-│   │   │   ├── shared.module.ts
-│   │   │   ├── components/
-│   │   │   │   ├── navbar/
-│   │   │   │   ├── sidebar/
-│   │   │   │   └── [componentes-comunes]/
-│   │   │   ├── models/
-│   │   │   │   ├── transportista.model.ts
-│   │   │   │   ├── viaje.model.ts
-│   │   │   │   └── [models-comunes]/
-│   │   │   └── pipes/
-│   │   └── features/
-│   │       ├── relaciones/
-│   │       │   ├── relaciones.module.ts
-│   │       │   ├── relaciones-lista/
-│   │       │   └── relaciones-detalle/
-│   │       ├── solicitudes/
-│   │       │   ├── solicitudes.module.ts
-│   │       │   ├── solicitudes-lista/
-│   │       │   └── solicitudes-crear/
-│   │       ├── viajes/
-│   │       │   ├── viajes.module.ts
-│   │       │   ├── viajes-lista/
-│   │       │   ├── viajes-asignar/
-│   │       │   └── viajes-detalle/
-│   │       └── dashboard/
-│   │           └── dashboard.module.ts
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── Layout.tsx
+│   │   └── ui/                      ← Componentes reutilizables genéricos
+│   ├── pages/                       ← Una carpeta por feature (page-first)
+│   │   ├── relaciones/
+│   │   │   ├── RelacionesListaPage.tsx
+│   │   │   └── RelacionesDetallePage.tsx
+│   │   ├── solicitudes/
+│   │   │   ├── SolicitudesListaPage.tsx
+│   │   │   └── SolicitudesCrearPage.tsx
+│   │   ├── viajes/
+│   │   │   ├── ViajesListaPage.tsx
+│   │   │   ├── ViajesAsignarPage.tsx
+│   │   │   └── ViajesDetallePage.tsx
+│   │   └── dashboard/
+│   │       └── DashboardPage.tsx
+│   ├── hooks/                       ← Custom hooks (datos, estado, lógica)
+│   │   ├── useRelaciones.ts
+│   │   ├── useViajes.ts
+│   │   └── [otros hooks]/
+│   ├── services/                    ← Clientes HTTP hacia el backend
+│   │   ├── api.ts                   ← Instancia base (axios/fetch)
+│   │   ├── relaciones.service.ts
+│   │   └── viajes.service.ts
+│   ├── types/                       ← Interfaces TypeScript compartidas
+│   │   ├── transportista.ts
+│   │   ├── viaje.ts
+│   │   └── [otros tipos]/
 │   ├── styles/
 │   │   ├── globals.css              ← Tailwind + reset global
 │   │   └── variables.css            ← CSS vars (si hay DESIGN.md)
-│   ├── main.ts
-│   └── index.html
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── router.tsx                   ← Definición de rutas
 ├── tailwind.config.js
-├── angular.json
+├── vite.config.ts
 └── tsconfig.json
 ```
 
-**Nota:** Espera confirmación de DESIGN.md (colores, tipografía, componentes).
+**Nota:** Librería de componentes UI y solución de routing/data-fetching (React Query, React Router, etc.) se define en Fase 2 junto con DESIGN.md.
 
 ### 2.5 Contratos de Integración
 
@@ -551,7 +545,7 @@ Estas iniciativas **dependen** de datos operativos o aprobación final del PRD:
 | Tarea | Responsable | Estimado |
 |:------|:-----------|:---------|
 | Crear repo backend (NestJS scaffold) | Backend Lead | 1 día |
-| Crear repo frontend (Angular scaffold) | Frontend Lead | 1 día |
+| Crear repo frontend (React 18 + Vite scaffold) | Frontend Lead | 1 día |
 | Implementar migraciones (10 entidades) | Backend Lead | 2 días |
 | Crear docker-compose.yml | DevOps/Backend | 0.5 día |
 | Implementar TransformInterceptor + HttpExceptionFilter global | Backend Lead | 0.5 día |

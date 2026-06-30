@@ -99,12 +99,10 @@ Este documento registra el **cierre formal de cada fase SDLC**. Es el audit trai
 - [ ] `environment.ts` + `.env.example`
 
 ### Estructura Frontend
-- [ ] Repo `apps/frontend` creado (Angular 17 scaffold)
-- [ ] Carpeta `core/` con guards, interceptors, services
-- [ ] Carpeta `shared/` con componentes reutilizables
-- [ ] Carpeta `features/` con módulos feature-first
-- [ ] `tailwind.config.js` con paleta de DESIGN.md
-- [ ] Componentes PrimeNG integrados
+- [ ] Repo `apps/frontend` creado (React 18 + TypeScript scaffold)
+- [ ] Estructura de carpetas: `components/`, `pages/`, `hooks/`, `services/`
+- [ ] Tailwind CSS configurado
+- [ ] Librería de componentes UI definida (a decidir en Fase 2)
 
 ### Validación Técnica (Architecture Board)
 - [ ] Schema sigue estándar CLAUDE.md (IDENTITY PK, columnas audit, timezone)
@@ -157,7 +155,7 @@ Este documento registra el **cierre formal de cada fase SDLC**. Es el audit trai
 - [ ] Endpoints GET/POST/PATCH según funcionalidades
 - [ ] Tests unitarios (service layer) — target 80% coverage
 
-### Frontend (Angular)
+### Frontend (React)
 - [ ] Feature `relaciones` con lista y detalle
 - [ ] Feature `solicitudes` con creación y lista
 - [ ] Feature `viajes` con asignación y lista
