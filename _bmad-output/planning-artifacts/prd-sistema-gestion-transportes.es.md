@@ -3,7 +3,7 @@
 <p align="right">
   <img src="https://img.shields.io/badge/UNIMAR%20S.A.-Operador_Log%C3%ADstico_Aduanero-0f3e67?style=for-the-badge&logoColor=white" alt="Unimar S.A.">
   <img src="https://img.shields.io/badge/unimar_tms-PRD%20Sistema%20de%20Gesti%C3%B3n%20de%20Transportes-003c6b?style=for-the-badge&logoColor=white" alt="unimar_tms">
-  <img src="https://img.shields.io/badge/Versi%C3%B3n-0.1.0--draft-f39c12?style=flat-square" alt="Versión">
+  <img src="https://img.shields.io/badge/Versi%C3%B3n-0.2.0--draft-f39c12?style=flat-square" alt="Versión">
   <img src="https://img.shields.io/badge/Estado-Borrador-ff7f50?style=flat-square" alt="Estado">
 </p>
 
@@ -16,7 +16,7 @@
 
 - **Identificador:** `PRD-TMS-001`
 - **Producto:** Sistema de Gestión de Transportes (TMS)
-- **Versión:** 0.1.0-draft
+- **Versión:** 0.2.0-draft
 - **Estado:** Borrador
 - **Autor(es):** John (Product Manager)
 - **Aprobador de Negocio:** *(pendiente)*
@@ -27,11 +27,11 @@
 
 ### 2.1 Declaración del Problema
 
-La operación de transporte de Unimar procesa aproximadamente **{X} contenedores/mes** distribuidos en **{Y} viajes/mes** sin un sistema dedicado de gestión. El proceso actual depende de hojas de cálculo, llamadas telefónicas y WhatsApp, generando **{X} horas/hombre de retrabajo mensual**, una tasa de errores del **{X}%** en datos de asignación (placa, chofer, fecha) y **cero trazabilidad** en tiempo real del estado de los contenedores.
+La operación de transporte de Unimar procesa aproximadamente **{X} contenedores/mes** distribuidos en **{Y} viajes/mes** sin un sistema dedicado de gestión. El proceso actual depende de hojas de cálculo, llamadas telefónicas, correos y WhatsApp, generando **{X} horas/hombre de retrabajo mensual**, una tasa de errores del **{X}%** en datos de asignación (placa, chofer, fecha) y **cero trazabilidad** en tiempo real del estado de los contenedores.
 
 ### 2.2 Solución Propuesta
 
-El **Sistema de Gestión de Transportes (TMS)** es el nuevo dominio de la **Suite Operativa** de Unimar (capa Apoyo al Negocio) que digitaliza el ciclo completo de transporte de contenedores desde puerto: desde la recepción de relaciones detalladas desde SAP hasta la confirmación de viaje, coordinando de forma iterativa transportistas, choferes y unidades vehiculares.
+El **Sistema de Gestión de Transportes (TMS)** es el nuevo dominio de la **Suite Operativa** de Unimar (capa Apoyo al Negocio) que digitaliza el ciclo completo de transporte de contenedores, carga suelta y carga rodante desde/hasta puerto, traslado de mercancía local y devolución de contenedores vacíos: desde las solicitudes de transporte (relaciones detalladas desde SAP) hasta la confirmación de viaje, coordinando de forma iterativa transportistas, choferes y unidades vehiculares.
 
 ### 2.3 Alcance del MVP
 
@@ -39,10 +39,10 @@ El MVP (Q3 2026) cubre las siguientes funcionalidades:
 
 | Categoría | Funcionalidades |
 | :-------- | :-------------- |
-| **Gestión de datos** | Relaciones detalladas desde SAP, búsqueda de contenedores |
-| **Planificación** | Creación de solicitudes, clonación, asignación de viajes |
+| **Gestión de datos** | Registro de solicitudes de transporte (input de usuario y obtención desde SAP — relaciones detalladas), búsqueda de contenedores |
+| **Planificación** | Creación de solicitudes, gestión de citas en el puerto o depósito temporal, asignación de viajes |
 | **Coordinación** | Selección de transportista, chofer y unidad (asignación iterativa con el transportista) |
-| **Citas portuarias** | Coordinación con DPWORLD/APM |
+| **Citas** | Coordinación con DPWORLD/APM o los depósitos |
 | **Visibilidad** | Dashboard de planificación, calendario de citas, alertas de vencimiento |
 | **Operación** | Aceptación/rechazo de viaje, cancelación, reasignación, registro fotográfico |
 | **Auditoría** | Historial de cambios, exportación de datos |
@@ -62,7 +62,8 @@ El MVP (Q3 2026) cubre las siguientes funcionalidades:
 | Fase | Entregable | Horizonte |
 | :--- | :--------- | :-------- |
 | **Fase 1 — MVP** | Planificación y asignación de transportes | Q3 2026 |
-| **Fase 2 — GRE** | Emisión de guías de remisión electrónicas a SUNAT | Q1 2027 |
+| **Fase 2 — Operación** | Reasignación, aceptación/rechazo, notificaciones, excepciones y registro fotográfico | Q4 2026 |
+| **Fase 2 — Emisión (GRE)** | Emisión de guías de remisión electrónicas a SUNAT + integración SAP en tiempo real (BAPI) | Q1 2027 |
 | **Fase 3 — Track & Trace** | Seguimiento en tiempo real y notificaciones | Q2 2027 |
 | **Fase 4 — App Móvil** | Aplicación móvil para transportistas | Q3 2027 |
 
@@ -70,16 +71,16 @@ El MVP (Q3 2026) cubre las siguientes funcionalidades:
 
 ### 3.1 Contexto Actual
 
-- **Operación de transporte:** Unimar gestiona el transporte de contenedores desde puerto hasta destino final. La operación actual procesa aproximadamente **{X} contenedores/mes** distribuidos en **{Y} viajes/mes** con **{Z} transportistas activos**.
+- **Operación de transporte:** Unimar gestiona el transporte de contenedores desde/hasta el puerto, transporte local (inland) hasta destino final. La operación actual procesa aproximadamente **{X} contenedores/mes** distribuidos en **{Y} viajes/mes** con **{Z} transportistas activos**.
 - **Ecosistema de sistemas:** Unimar opera su Suite Operativa con dominios como UMS, MMS y SIL, interoperados mediante el bróker XMS. El TMS se incorpora como nuevo dominio en la capa de Apoyo al Negocio.
-- **Proceso actual (paso a paso):**
-  1. El Gestor consulta relaciones detalladas en SAP manualmente
-  2. Copia datos de contenedores a una hoja de cálculo
-  3. Selecciona transportista según disponibilidad conocida (sin sistema)
+- **Proceso actual de traslado/descarga de contenedores (paso a paso):**
+  1. El personal de transportes recibe las solicitudes de transporte vía correo
+  2. Copia datos de las solicitudes de transporte a una hoja de cálculo
+  3. Coordina con los proveedores de transporte para la atención de dichas solicitudes vía llamada telefónica y WhatsApp, seleccionando transportista según disponibilidad conocida (sin sistema)
   4. Comunica la asignación por llamada telefónica o WhatsApp
   5. El transportista confirma chofer y placa por la misma vía
-  6. El Gestor actualiza manualmente la hoja de cálculo
-  7. No existe registro centralizado ni trazabilidad del estado
+  6. El personal de transportes actualiza manualmente la hoja de cálculo, donde asocia la información del chofer y la empresa de transportes con la solicitud de transporte
+  7. No existe registro centralizado ni trazabilidad del estado; toda la coordinación se realiza vía llamada o WhatsApp
 - **Tiempo promedio de asignación:** {X} horas desde solicitud hasta viaje confirmado
 - **Tasa de errores:** {X}% de viajes presentan datos inconsistentes (placa incorrecta, chofer no disponible, fecha desactualizada)
 - **Volumen de transportistas:** {X} transportistas con {Y} unidades vehiculares registradas
@@ -128,11 +129,11 @@ El TMS es pieza clave de la digitalización de la Suite Operativa de Unimar. Ade
 
 | Categoría | Funcionalidades Incluidas |
 | :-------- | :------------------------ |
-| **Gestión de datos** | F-01 Relaciones detalladas desde SAP, F-17 Búsqueda rápida de contenedores |
+| **Gestión de datos** | F-01 Integración con SAP para obtener las solicitudes de transporte (relaciones detalladas), F-17 Búsqueda rápida de solicitudes por naves, documentos de transporte y contenedores |
 | **Solicitudes** | F-02 Creación de solicitud, F-18 Clonar solicitud |
 | **Planificación y asignación** | F-03 Asignación de viaje, F-04 Selección de transportista, F-05 Selección de chofer, F-06 Selección de unidad vehicular, F-07 Confirmación de viaje |
 | **Coordinación iterativa** | Asignación bidireccional UNIMAR-transportista para chofer y unidad (RN-06) |
-| **Citas portuarias** | F-11 Coordinación de citas con DPWORLD/APM, F-19 Vista calendario de citas |
+| **Citas portuarias** | F-11 Coordinación de citas con DPWORLD/APM u otros terminales, F-19 Vista calendario de citas |
 | **Visibilidad** | F-08 Consulta de viajes, F-09 Edición de viaje, F-10 Dashboard de planificación, F-20 Alertas de vencimiento |
 | **Gestión** | F-12 Cancelación de solicitud/viaje antes de ejecución |
 | **Auditoría** | F-14 Historial de cambios, F-21 Exportar datos |
@@ -237,7 +238,7 @@ flowchart TB
 
 | Actor | Casos de Uso — MVP (Fase 1) | Casos de Uso — Fase 2+ |
 | :---- | :-------------------------- | :---------------------- |
-| **Gestor de Transportes** | F-01 Consultar relaciones detalladas, F-02 Crear solicitud, F-03 Asignar viaje, F-04 Seleccionar transportista, F-05 Seleccionar chofer, F-06 Seleccionar unidad, F-07 Confirmar viaje, F-08 Consultar viajes, F-09 Editar viaje, F-10 Dashboard, F-11 Coordinar citas portuarias, F-12 Cancelar solicitud/viaje, F-14 Historial de cambios, F-17 Buscar contenedores, F-18 Clonar solicitud, F-19 Calendario de citas, F-20 Alertas de vencimiento, F-21 Exportar datos | F-13 Reasignar viaje, F-15 Notificaciones mejoradas, F-22 Gestión de excepciones |
+| **Gestor de Transportes** | F-01 Consultar relaciones detalladas o solicitudes de transporte, F-02 Crear solicitud, F-03 Asignar viaje según el tipo de carga (contenedores, carga rodante, carga suelta), F-04 Seleccionar transportista, F-05 Seleccionar chofer, F-06 Seleccionar unidad, F-07 Confirmar viaje, F-08 Consultar viajes, F-09 Editar viaje, F-10 Dashboard, F-11 Coordinar citas portuarias, F-12 Cancelar solicitud/viaje, F-14 Historial de cambios, F-17 Buscar contenedores, F-18 Clonar solicitud, F-19 Calendario de citas, F-20 Alertas de vencimiento, F-21 Exportar datos | F-13 Reasignar viaje, F-15 Notificaciones mejoradas, F-22 Gestión de excepciones |
 | **Transportista** | Consultar solicitud asignada, ver datos de viaje | F-16 Aceptación/rechazo de viaje, F-23 Registro fotográfico |
 | **Operador de Documentación** | Consultar relaciones detalladas, validar datos | Edición de relaciones |
 | **Gestor Comercial** | Dashboard de planificación, consulta de viajes | Reportería avanzada, portal de clientes |
@@ -247,7 +248,7 @@ flowchart TB
 
 | Actor | Web App TMS | SAP | DPWORLD/APM | Track & Trace |
 | :---- | :---------- | :-- | :---------- | :------------ |
-| **Gestor de Transportes** | Crea, edita, consulta | Consulta relaciones | Coordina citas | Consulta tracking |
+| **Gestor de Transportes** | Crea, edita, consulta | Consulta relaciones | Genera citas | Consulta tracking |
 | **Transportista** | Consulta solicitud | — | — | — |
 | **Operador de Documentación** | Valida datos | Recibe datos | — | — |
 | **Gestor Comercial** | Consulta dashboard | — | — | Consulta tracking |
@@ -257,9 +258,9 @@ flowchart TB
 
 | ID | Funcionalidad | Descripción |
 | :-- | :------------ | :---------- |
-| F-01 | Gestión de Relaciones Detalladas | Visualización y filtro de relaciones detalladas desde SAP por nave, BL, puerto, fecha |
-| F-02 | Creación de Solicitud de Transporte | El Gestor crea una solicitud seleccionando contenedores de una relación detallada |
-| F-03 | Asignación de Viaje | El Gestor asigna la solicitud a un transportista, definiendo origen, destino y fecha |
+| F-01 | Gestión de Relaciones Detalladas | Visualización y filtro de relaciones detalladas desde SAP por nave, BL/BK, puerto, fecha |
+| F-02 | Creación de Solicitud de Transporte | El Gestor crea una solicitud seleccionando contenedores de una relación detallada (DT de importación o exportación), o crea una solicitud de transporte de acuerdo a los requerimientos de las líneas de negocio como CD, DAS o vacíos |
+| F-03 | Asignación de Viaje | El Gestor asigna la solicitud a un transportista de acuerdo a las características de la carga a movilizar, definiendo origen, destino y fecha |
 | F-04 | Selección de Transportista | Búsqueda y selección de transportista desde maestro de datos |
 | F-05 | Selección de Chofer | Asignación de chofer al viaje. Puede ser asignado por UNIMAR desde el maestro o propuesto/confirmado por el transportista. Opcional en planificación, se coordina hasta antes de iniciar el viaje |
 | F-06 | Selección de Unidad Vehicular | Asignación de placa/unidad al viaje. Puede ser asignada por UNIMAR desde el maestro o propuesta/confirmada por el transportista. Opcional en planificación, se coordina hasta antes de iniciar el viaje |
@@ -267,7 +268,7 @@ flowchart TB
 | F-08 | Consulta de Viajes Planificados | Listado de viajes con estado, filtros por fecha, transportista, estado |
 | F-09 | Edición de Viaje | Edición de datos del viaje antes de su ejecución |
 | F-10 | Dashboard de Planificación | Resumen visual de viajes por estado con acceso rápido a creación |
-| F-11 | Coordinación de Citas Portuarias | Gestión de citas con terminales portuarias (DPWORLD/APM): confirmación de arribo/zarpe y agendamiento de citas de retiro de contenedores |
+| F-11 | Coordinación de Citas Portuarias | Gestión de citas con terminales portuarias (DPWORLD/APM) o almacenes: confirmación de arribo/zarpe, agendamiento de citas de retiro de contenedores y gestión de citas en almacenes de depósito de contenedores para devolución de vacíos |
 | F-12 | Cancelación de Solicitud/Viaje | Cancelación de solicitud o viaje antes de su ejecución, con registro del motivo |
 | F-13 | Reasignación de Viaje | Reasignación del viaje a otro transportista cuando el original rechaza o no puede cumplir |
 | F-14 | Historial de Cambios | Registro de auditoría de todos los cambios en solicitudes y viajes: actor, timestamp, campo, valor anterior y nuevo |
@@ -283,52 +284,54 @@ flowchart TB
 
 ## 8. Reglas de Negocio Explícitas
 
-| ID | Regla |
-| :-- | :---- |
-| RN-01 | Un manifiesto puede tener más de una relación detallada |
-| RN-02 | La Fase 1 contempla relación detallada de descarga de contenedores desde puerto |
-| RN-03 | Una relación detallada puede pertenecer a diferentes orígenes: depósito, almacenes, etc. |
-| RN-04 | Una Orden de Servicio (SAP) puede tener asociados múltiples Pedidos de Transporte en diferentes momentos |
-| RN-05 | El Pedido de Transporte se referencia desde la OS SAP |
-| RN-06 | La asignación de chofer y unidad vehicular es un proceso de coordinación iterativo entre UNIMAR y el transportista. UNIMAR puede asignar desde el maestro, el transportista puede proponer o confirmar, y la asignación se cierra cuando ambas partesvalidan. Esta coordinación puede ocurrir en planificación, confirmación o hasta antes de iniciar el viaje |
-| RN-07 | Para carga suelta se requieren fotos, packing list y dimensiones (fase posterior) |
-| RN-08 | La coordinación de citas portuarias se realiza a través del portal de DPWORLD/APM |
-| RN-09 | Un contenedor solo puede estar asignado a un viaje activo a la vez |
-| RN-10 | La solicitud de transporte solo puede incluir contenedores de la misma relación detallada |
-| RN-11 | El chofer y la unidad deben estar asociados al transportista seleccionado en el maestro de datos |
-| RN-12 | Origen y destino de un viaje no pueden ser iguales |
-| RN-13 | Un viaje no puede confirmarse sin al menos el transportista asignado |
-| RN-14 | Un viaje en ejecución (con checkpoint registrado) no puede editarse |
-| RN-15 | Un viaje solo puede cancelarse antes de iniciar la ejecución |
-| RN-16 | La fecha del viaje no puede ser anterior a la fecha actual al momento de creación |
-| RN-17 | La fecha de cita portuaria debe ser coherente con la fecha estimada de arribo de la nave |
-| RN-18 | Solo contenedores con estado pendiente o planificado en la relación detallada pueden asignarse a viajes |
-| RN-19 | La sincronización batch de maestros con SAP debe ejecutarse mínimo una vez al día |
-| RN-20 | Si la sincronización SAP falla, el sistema opera con el último conjunto de datos válido |
-| RN-21 | El transportista debe ser notificado al momento de asignársele un viaje |
-| RN-22 | El Gestor debe ser notificado cuando el transportista proporciona chofer y unidad vehicular |
-| RN-23 | Una solicitud de transporte puede generar múltiples viajes cuando la cantidad de contenedores excede la capacidad de una unidad |
-| RN-24 | Un viaje puede contener múltiples contenedores siempre que pertenezcan a la misma solicitud |
-| RN-25 | Una solicitud de transporte debe contener al menos un contenedor |
-| RN-26 | El transportista debe aceptar o rechazar formalmente un viaje asignado |
-| RN-27 | Los datos del chofer deben validarse contra el maestro (licencia, vigencia) |
-| RN-28 | La unidad vehicular debe tener estado operativo en el maestro para poder asignarse |
-| RN-29 | No se puede asignar un viaje si el transportista tiene otro viaje en conflicto de horario/fecha para la misma unidad |
-| RN-30 | El historial de cambios debe registrar: actor, timestamp, campo modificado, valor anterior y nuevo |
-| RN-31 | Si el transportista rechaza el viaje, el Gestor debe ser notificado para reasignar |
-| RN-32 | La solicitud de transporte debe referenciar al menos una Orden de Servicio de SAP |
-| RN-33 | Un contenedor con viaje en ejecución no puede ser asignado a otro viaje |
-| RN-34 | Debe existir un tiempo mínimo de anticipación para crear un viaje (ej. 24 horas antes del retiro) |
-| RN-35 | Un transportista con más del 20% de viajes rechazados en los últimos 30 días debe ser marcado como riesgoso |
-| RN-36 | Los contenedores de un mismo BL deben viajar juntos salvo excepción justificada |
-| RN-37 | La capacidad máxima de contenedores por viaje depende del tipo de unidad vehicular (20' o 40') |
-| RN-38 | El sistema debe alertar sobre contenedores huérfanos (sin viaje asignado después de X días) |
-| RN-39 | Las notificaciones deben tener canal de fallback (email → SMS → push) |
-| RN-40 | El dashboard debe mostrar métricas en tiempo real: viajes hoy, pendientes, completados, alertas |
+> **Prioridad (MoSCoW):** **M** = Must (imprescindible MVP) · **S** = Should (importante, no bloquea MVP) · **C** = Could (deseable / fase posterior).
 
-## 8. Restricciones y Supuestos
+| ID | Regla | Prioridad |
+| :-- | :---- | :-------: |
+| RN-01 | Un manifiesto puede tener más de una relación detallada asociada a un BL, y este puede tener más de una relación detallada | M |
+| RN-02 | La Fase 1 contempla relación detallada (solicitud de transporte) de descarga y embarque de contenedores, carga suelta y rodante desde/hasta el puerto | M |
+| RN-03 | Una relación detallada (solicitud de transporte) puede pertenecer a diferentes orígenes: depósito, almacenes, etc. | M |
+| RN-04 | Una Orden de Servicio (SAP) puede tener asociados múltiples Pedidos de Transporte en diferentes momentos | M |
+| RN-05 | El Pedido de Transporte se referencia desde la OS SAP | M |
+| RN-06 | La asignación de chofer y unidad vehicular es un proceso de coordinación iterativo entre UNIMAR y el transportista. UNIMAR puede asignar desde el maestro, el transportista puede proponer o confirmar, y la asignación se cierra cuando ambas partes validan. Esta coordinación puede ocurrir en planificación, confirmación o hasta antes de iniciar el viaje | M |
+| RN-07 | Para carga suelta se requieren fotos, packing list y dimensiones (fase posterior) | C |
+| RN-08 | La coordinación de citas portuarias se realiza a través del portal de DPWORLD/APM | M |
+| RN-09 | Un contenedor solo puede estar asignado a un viaje activo a la vez | M |
+| RN-10 | La solicitud de transporte solo puede incluir contenedores, carga suelta o rodante de la misma relación detallada | M |
+| RN-11 | El chofer y la unidad deben estar asociados a la empresa de transportes seleccionada en el maestro de datos | M |
+| RN-12 | Origen y destino de un viaje no pueden ser iguales | M |
+| RN-13 | Un viaje no puede confirmarse sin al menos el transportista asignado | M |
+| RN-14 | Un viaje en ejecución (con checkpoint registrado) no puede editarse, salvo casos excepcionales en que por una falla mecánica se deba cambiar la unidad de transporte; en tal caso solo personal autorizado puede modificarlo, guardando un log de modificaciones | M |
+| RN-15 | Un viaje solo puede cancelarse antes de iniciar la ejecución; hay excepciones que debe manejar solo el personal autorizado | M |
+| RN-16 | La fecha del viaje no puede ser anterior a la fecha actual al momento de creación | M |
+| RN-17 | La fecha de cita portuaria debe ser coherente con la fecha estimada de arribo de la nave. Las citas portuarias no están ligadas a una nave o viaje específico; se asignan a la nave cuando entregan el contenedor en el puerto (DPW) | S |
+| RN-18 | Solo contenedores con estado pendiente o planificado en la relación detallada pueden asignarse a viajes, validando el tipo de carga y las características de la unidad de transporte (ej. traslados de carga IMO requieren un tipo especial de unidad vehicular) | M |
+| RN-19 | La sincronización batch de maestros con SAP debe ejecutarse mínimo una vez al día. (A evaluar: tener maestros propios en el sistema de gestión de transportes) | M |
+| RN-20 | Si la sincronización SAP falla, el sistema opera con el último conjunto de datos válido | S |
+| RN-21 | El transportista debe ser notificado al momento de asignársele un viaje | M |
+| RN-22 | El Gestor debe ser notificado cuando el transportista proporciona chofer y unidad vehicular | S |
+| RN-23 | Una solicitud de transporte puede generar múltiples viajes cuando la cantidad de contenedores, carga suelta o rodante excede la capacidad de una unidad | M |
+| RN-24 | Un viaje puede contener múltiples contenedores, siempre que pertenezcan a la misma solicitud | M |
+| RN-25 | Una solicitud de transporte debe contener al menos un contenedor | M |
+| RN-26 | El transportista debe aceptar o rechazar formalmente un viaje asignado | S |
+| RN-27 | Los datos del chofer deben validarse contra el maestro (licencia, vigencia) | S |
+| RN-28 | La unidad vehicular debe tener estado operativo en el maestro para poder asignarse | M |
+| RN-29 | No se puede asignar un viaje si el transportista tiene otro viaje en conflicto de horario/fecha para la misma unidad | S |
+| RN-30 | El historial de cambios debe registrar: actor, timestamp, campo modificado, valor anterior y nuevo | M |
+| RN-31 | Si el transportista rechaza el viaje, el Gestor debe ser notificado para reasignar | S |
+| RN-32 | La solicitud de transporte debe referenciar al menos una Orden de Servicio de SAP | S |
+| RN-33 | Un contenedor con viaje en ejecución no puede ser asignado a otro viaje | M |
+| RN-34 | Debe existir un tiempo mínimo de anticipación para crear un viaje (ej. 24 horas antes del retiro) | S |
+| RN-35 | Un transportista con más del 20% de viajes rechazados en los últimos 30 días debe ser marcado como riesgoso | C |
+| RN-36 | Los contenedores de un mismo BL deben viajar juntos salvo excepción justificada | S |
+| RN-37 | La capacidad máxima de contenedores por viaje depende del tipo de unidad vehicular (20' o 40') y de la condición del contenedor (solo si es vacío se puede trasladar más de un contenedor en un viaje; los llenos son un contenedor por viaje) | M |
+| RN-38 | El sistema debe alertar sobre contenedores huérfanos (sin viaje asignado después de X días) | S |
+| RN-39 | Las notificaciones deben tener canal de fallback (email → SMS → push) | C |
+| RN-40 | El dashboard debe mostrar métricas en tiempo real: viajes hoy, pendientes, completados, alertas | S |
 
-### 8.1 Restricciones
+## 9. Restricciones y Supuestos
+
+### 9.1 Restricciones
 
 | ID | Restricción | Categoría |
 | :-- | :---------- | :-------- |
@@ -340,7 +343,7 @@ flowchart TB
 | R-06 | El portal de DPWORLD/APM es un sistema externo sin control sobre disponibilidad ni cambios de interfaz | Operativa |
 | R-07 | Los datos maestros (transportistas, choferes, unidades) dependen de SAP; si SAP no provee datos, el TMS no puede funcionar | Dependencia |
 
-### 8.2 Supuestos
+### 9.2 Supuestos
 
 | ID | Supuesto | Riesgo si no se cumple |
 | :-- | :------- | :--------------------- |
@@ -353,7 +356,7 @@ flowchart TB
 | S-07 | Los transportistas responden las asignaciones en un tiempo razonable (< 24 horas) | Retrasos en la planificación |
 | S-08 | La infraestructura de TI (servidores, red, seguridad) estará disponible para el MVP | Retraso en el cronograma |
 
-## 9. Riesgos de Negocio
+## 10. Riesgos de Negocio
 
 | ID | Riesgo | Probabilidad | Impacto | Mitigación |
 | :-- | :----- | :----------- | :------ | :--------- |
@@ -370,11 +373,11 @@ flowchart TB
 | RS-11 | Infraestructura de TI no disponible a tiempo para el MVP | Baja | Alto | Definir requisitos tempranos; seguimiento con TI; alternativas cloud |
 | RS-12 | Fuga o acceso no autorizado a datos sensibles de transportistas | Baja | Alto | Acceso por roles; auditoría de accesos; cifrado de datos sensibles |
 
-## 10. Criterios de Aceptación del PRD
+## 11. Criterios de Aceptación del PRD
 
 El PRD se considera aprobado cuando se cumplan todos los siguientes criterios:
 
-### 10.1 Contenido del PRD
+### 11.1 Contenido del PRD
 
 | ID | Criterio | Responsable | Estado |
 | :-- | :------- | :---------- | :----- |
@@ -389,7 +392,7 @@ El PRD se considera aprobado cuando se cumplan todos los siguientes criterios:
 | CA-09 | Reglas de negocio priorizadas (Must/Should/Could) | John (PM) | ☐ |
 | CA-10 | Glosario completo y consistente con el dominio | John (PM) | ☐ |
 
-### 10.2 Producto
+### 11.2 Producto
 
 | ID | Criterio | Responsable | Estado |
 | :-- | :------- | :---------- | :----- |
@@ -399,7 +402,7 @@ El PRD se considera aprobado cuando se cumplan todos los siguientes criterios:
 | CA-14 | Contratos de integración con DPWORLD/APM definidos | Arquitecto | ☐ |
 | CA-15 | Plan de datos maestros (mapeo, calidad, limpieza) aprobado | John (PM) + Arquitecto | ☐ |
 
-### 10.3 Proyecto
+### 11.3 Proyecto
 
 | ID | Criterio | Responsable | Estado |
 | :-- | :------- | :---------- | :----- |
@@ -408,9 +411,9 @@ El PRD se considera aprobado cuando se cumplan todos los siguientes criterios:
 | CA-18 | Plan de testing (unitario, integración, aceptación) definido | QA Lead | ☐ |
 | CA-19 | Plan de despliegue y capacitación definido | PM del proyecto | ☐ |
 
-## 11. Trazabilidad
+## 12. Trazabilidad
 
-### 11.1 Referencias del PRD
+### 12.1 Referencias del PRD
 
 | Artefacto | Referencia | Sección del PRD |
 | :-------- | :--------- | :-------------- |
@@ -423,9 +426,9 @@ El PRD se considera aprobado cuando se cumplan todos los siguientes criterios:
 | Plan de Testing | Reglas de negocio a probar | RN-01 a RN-40 |
 | Plan de Despliegue | Funcionalidades MVP a desplegar | 5.1 (Alcance) |
 | Notas de Lanzamiento | Valor entregado contra objetivos | 4 (Objetivos y Métricas) |
-| Reporte Resumen de Pruebas | Criterios de aceptación del PRD | 10 (Criterios de Aceptación) |
+| Reporte Resumen de Pruebas | Criterios de aceptación del PRD | 11 (Criterios de Aceptación) |
 
-### 11.2 Matriz de Trazabilidad
+### 12.2 Matriz de Trazabilidad
 
 ```mermaid
 flowchart LR
@@ -464,7 +467,7 @@ flowchart LR
     style RP fill:#fce4ec
 ```
 
-### 11.3 Convención de Referencia
+### 12.3 Convención de Referencia
 
 | Artefacto Destino | Convención de Referencia |
 | :---------------- | :---------------------- |
@@ -477,24 +480,25 @@ flowchart LR
 | Notas de Lanzamiento | `NL-TMS-{versión}` |
 | Reporte de Pruebas | `RP-TMS-{fase}` |
 
-## 12. Glosario
+## 13. Glosario
 
 | Término | Definición |
 | :------ | :--------- |
-| **Relación Detallada** | Lista de contenedores por nave + BL, base de la planificación de transporte |
+| **Relación Detallada** | Lista de contenedores, carga suelta o rodante por nave + BL/BK, base de la planificación de transporte |
 | **Solicitud de Transporte** | Petición formal de servicio de transporte para uno o más contenedores |
 | **Viaje** | Asignación de un transportista, chofer y unidad a una solicitud de transporte |
 | **Orden de Servicio (OS)** | Documento SAP que origina el pedido de transporte |
 | **Guía de Remisión Electrónica (GRE)** | Documento electrónico para el traslado de carga, transmitido a SUNAT |
 | **Checkpoint** | Punto de control en la ejecución del viaje (inicio ruta, fin ruta) |
 | **Manifiesto** | Documento de carga de la nave |
-| **BL / Booking** | Bill of Lading — conocimiento de embarque |
+| **BL / BK (Booking)** | Bill of Lading — conocimiento de embarque (BL en importación, BK/Booking en exportación) |
 
-## 13. Historial de Cambios
+## 14. Historial de Cambios
 
 | Versión | Fecha | Autor | Cambios |
 | :------ | :---- | :---- | :------ |
 | 0.1.0-draft | 2026-06-23 | John (PM) | Versión inicial |
+| 0.2.0-draft | 2026-06-30 | John (PM) | Correcciones estructurales y de contenido: §8 duplicado renumerado (Restricciones→§9, cascada hasta §14); reconciliada contradicción de Fase 2 (§2.5 vs §5.2, ahora Operación Q4 2026 + Emisión Q1 2027); añadida priorización MoSCoW a RN-01..RN-40 (CA-09); unificado término BL/BK (glosario + F-01); enriquecidos §2.2, §2.3, §3.1, §5.1, §6.2, §6.3, §7 y RN según revisión de negocio (tracked-changes de M. Hernández). **Pendiente de negocio:** datos {X}/{Y}/{Z}, §3.3 Impacto, métricas §4 y firma de los 19 CA. |
 
 ---
 
