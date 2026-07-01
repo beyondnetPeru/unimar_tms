@@ -1,26 +1,46 @@
+# Pull Request — unimar_tms
+
+## Tipo de Cambio
+
+<!-- Marcar el tipo con [x] -->
+
+- [ ] Feature (feature/TMS-*)
+- [ ] Fix (fix/TMS-*)
+- [ ] Release (release/v*)
+- [ ] Hotfix (hotfix/TMS-*)
+- [ ] Chore (chore/*)
+- [ ] Docs
+- [ ] Refactor
+- [ ] Test
+- [ ] CI/CD
+
 ## Descripción
 
-[Resumen del cambio y motivación]
+<!-- Breve descripción del cambio -->
 
-## Tipo de cambio
+## Issue Relacionado
 
-- [ ] feat: nueva funcionalidad
-- [ ] fix: corrección de bug
-- [ ] refactor: refactorización
-- [ ] chore: mantenimiento / tooling
-- [ ] docs: documentación
+<!-- Ejemplo: TMS-123 -->
 
-## Criterios de aceptación
+## Cambios Realizados
 
-- [ ] Pruebas unitarias pasan
-- [ ] Cobertura ≥ 70%
-- [ ] Lint pasa
-- [ ] Build exitoso
+<!-- Lista de cambios principales -->
 
-## Evidencia de pruebas
+-
 
-[Capturas, logs, o descripción de cómo se probó]
+## Checklist
 
-## Referencias
+- [ ] Commits siguen Conventional Commits v1.0.0
+- [ ] Branch sigue la convención de nombres (`feature/TMS-<id>-<kebab-case>`)
+- [ ] No hay commits de merge en la branch
+- [ ] Cambios documentados si aplica
+- [ ] Tests actualizados si aplica
 
-[TMS-123](https://jira.unimar.compe/browse/TMS-123)
+## Notas Adicionales
+
+<!-- Información relevante para el reviewer -->
+
+---
+
+**Base Branch:** `develop`
+**Target Branch:** `develop` (squash merge) | `main` (--no-ff merge)

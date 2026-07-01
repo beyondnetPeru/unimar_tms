@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/Status-Planificaci%C3%B3n%20(v0.1.0--draft)-f39c12?style=for-the-badge)]()
+[![Status](https://img.shields.io/badge/Fase%201-Cierre%20Condicional-f39c12?style=for-the-badge)](./AUDITORIA-FASE-1.md)
 [![Platform](https://img.shields.io/badge/Stack-NestJS_%7C_PostgreSQL_%7C_React-informational?style=for-the-badge)]()
 [![Standard](https://img.shields.io/badge/Unimar%20Arch-042139?style=for-the-badge)](https://github.com/mhernandez-unimar/unimar_arch)
 [![License](https://img.shields.io/badge/License-MIT-0f3e67?style=for-the-badge)]()
@@ -54,39 +54,48 @@ ls .claude/skills/
 
 Abre la fase del ciclo de vida en la que trabajas. Cada sección agrupa los documentos y enlaces relevantes.
 
-<details>
-<summary><strong>Fase 00 — Concepción y Descubrimiento</strong></summary>
+> **Numeración canon `unimar_arch`:** las fases van de **1 a 5** (Mapeo SDLC–Artefactos). **No existe "Fase 0".** Seguimiento de cierre por fase en [PHASE_TRACKING.md](./PHASE_TRACKING.md).
+
+<details open>
+<summary><strong>Fase 1 — Concepción y Descubrimiento</strong> · 🟡 Cierre Condicional</summary>
 
 | Documento | Descripción | Tipo |
 |---|---|---|
-| [PRD — Sistema de Gestión de Transportes](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md) | Visión, alcance MVP, actores, flujos, historias de usuario, reglas de negocio, NFRs | PRD |
-| [Diagramas del Sistema (Mermaid)](./docs/diagramas-tms.md) | Vistas conceptuales, C4 de contexto, flujos de proceso, prototipos (renderizable en GitHub) | Modelo |
+| [PRD — Sistema de Gestión de Transportes](./_bmad-output/planning-artifacts/prd-sistema-gestion-transportes.es.md) | Visión, alcance MVP, actores, flujos, reglas de negocio, NFRs (v0.2.0-draft) | PRD |
+| [Historias de Usuario (18)](./_bmad-output/planning-artifacts/stories/) | `us-tms-01..18` — plantilla canon, cobertura 18/18 MVP | Historia |
+| [Backlog Ágil MVP](./_bmad-output/planning-artifacts/backlog-agil-tms-mvp-fase1.es.md) | 18 US priorizadas | Backlog |
+| [Plan de Avance MVP](./_bmad-output/planning-artifacts/plan-avance-mvp-fase1.es.md) | Modelo de datos core, contratos de integración, hitos | Plan |
+| [Roadmap de Estrategia Evolutiva](./_bmad-output/planning-artifacts/roadmap-estrategia-evolutiva.es.md) | 4 horizontes con triggers medibles | Roadmap |
+| [Diagramas del Sistema (Mermaid)](./docs/diagramas-tms.md) | Vistas conceptuales, C4 de contexto, flujos de proceso | Modelo |
+| [Auditoría Fase 1](./AUDITORIA-FASE-1.md) | Gate de gobernanza, hallazgos (W1–W3), veredicto — documento vivo | Auditoría |
+
+**Gate:** *Aprobación de Negocio — Alcance Congelado.* Arquitectura ✅ (con observación W3); negocio ⏳ (0/19 CA firmados, datos `{X}/{Y}/{Z}` pendientes). Detalle en la auditoría.
 
 </details>
 
 <details>
-<summary><strong>Fase 01 — Diseño y Arquitectura</strong></summary>
+<summary><strong>Fase 2 — Diseño y Arquitectura</strong></summary>
 
-*Pendiente — fase no iniciada. Completar PRD y aprobación de stakeholders para comenzar.*
-
-</details>
-
-<details>
-<summary><strong>Fase 02 — Construcción</strong></summary>
-
-*Pendiente — fase iniciada al completar Diseño y Arquitectura.*
+*Desbloqueada para diseño en paralelo (ver §8/§9 de la [Auditoría Fase 1](./AUDITORIA-FASE-1.md)). Épicas e Historias Funcionales pendientes de generar. Cierre formal del gate de negocio aún no firmado.*
 
 </details>
 
 <details>
-<summary><strong>Fase 03 — Validación y QA</strong></summary>
+<summary><strong>Fase 3 — Construcción</strong></summary>
+
+*Pendiente — se inicia al cerrar Diseño y Arquitectura. Código aún no iniciado.*
+
+</details>
+
+<details>
+<summary><strong>Fase 4 — Validación y QA</strong></summary>
 
 *Pendiente — se completará durante la fase de construcción.*
 
 </details>
 
 <details>
-<summary><strong>Fase 04 — Entrega y Operaciones</strong></summary>
+<summary><strong>Fase 5 — Entrega y Operaciones</strong></summary>
 
 *Pendiente — se completará después de la validación.*
 
@@ -104,6 +113,8 @@ Abre la fase del ciclo de vida en la que trabajas. Cada sección agrupa los docu
 | [Master Index Global](reference/navigation/MASTER_INDEX.md) | Ruteo exhaustivo de todos los documentos del repositorio | Índice |
 | [Guía de inicio por rol](reference/getting-started/README.md) | Onboarding autoguiado para cada perfil | Guía |
 | [Documentation Versions](DOCUMENTATION_VERSIONS.md) | Changelog de la documentación del repositorio | Registro |
+| [PHASE_TRACKING.md](./PHASE_TRACKING.md) | Cierre formal por fase SDLC (canon 1–5) — audit trail de gobernanza | Gobernanza |
+| [Auditoría Fase 1](./AUDITORIA-FASE-1.md) | Cumplimiento del gate de Fase 1 contra canon `unimar_arch` | Auditoría |
 
 </details>
 
@@ -114,7 +125,7 @@ Abre la fase del ciclo de vida en la que trabajas. Cada sección agrupa los docu
 |---|---|---|
 | [DECISIONS.md](./DECISIONS.md) | Registro de decisiones arquitectónicas activas | Decisión |
 | [Suite UNIMAR (upstream)](https://github.com/mhernandez-unimar/unimar_arch) | Repositorio del estándar corporativo y arquitectura de referencia | Estándar |
-| [ADRs locales](./reference/architecture/adrs/) | ADR-0001 (Stack), ADR-0002 (Actores), ADR-0003 (GitFlow) | Decisión |
+| [ADRs locales](./reference/architecture/adrs/) | ADR-0001 (Stack, *Draft*), ADR-0002 (Actores, *Accepted*), ADR-0003 (GitFlow), ADR-0004 (Herencia Directivas, *Accepted*), ADR-0005 (Topología Monolito Modular, *Draft*) | Decisión |
 | [Stack Tecnológico Autorizado](./reference/architecture/stack/stack-tecnologico-autorizado-tms.es.md) | Lista aprobada de tecnologías para el TMS | Estándar |
 
 </details>
